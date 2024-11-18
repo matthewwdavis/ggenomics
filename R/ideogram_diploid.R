@@ -62,9 +62,11 @@ ideogram_diploid <- function(genome.table, plot_title = NULL, x_axis_title = NUL
                  position = position_dodge(width = dodge_width),  # Use calculated dodge width
                  size = chr_size, 
                  lineend = "round") +
-    geom_point(aes(x = Chromosome, y = begin_telo_end, size = begin_telo_bp, fill = Hap),
+    geom_point(aes(x = Chromosome, y = begin_telo_end,
+                   size = ifelse(begin_telo_bp == 0, NA, begin_telo_bp), fill = Hap),
                shape = tel_shape, color = tel_color, position = position_dodge(width = dodge_width)) +
-    geom_point(aes(x = Chromosome, y = end_telo_end, size = end_telo_bp, fill = Hap),
+    geom_point(aes(x = Chromosome, y = end_telo_end,
+                   size = ifelse(end_telo_bp == 0, NA, end_telo_bp), fill = Hap),
                shape = tel_shape, color = tel_color, position = position_dodge(width = dodge_width)) +
     scale_color_manual(name = "Haplotype",
                        values = c(hap1 = hap1_color, hap2 = hap2_color),
