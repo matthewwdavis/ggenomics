@@ -36,7 +36,7 @@
 #'
 #' @examples
 #' # Example usage
-#' # ggideo(path_fasta = "path/to/genome.fasta", sample_name = "Sample_1", title_plot = "Genome Ideogram")
+#' # ggideo_diploid(path_hap1_fasta = "path/to/genome.fasta", path_hap2_fasta = "path/to/genome.fasta", sample_name = "Sample_1", title_plot = "Genome Ideogram")
 #'
 #' @importFrom Biostrings readDNAStringSet
 #' @importFrom data.table data.table
@@ -45,7 +45,7 @@
 #' @importFrom dplyr filter mutate left_join select
 #'
 #' @export
-ggideo <- function(path_hap1_fasta, path_hap2_fasta, chr_names = "Chr", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
+ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, chr_names = "Chr", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
                    size_windows = 1e6, min_tel_count = 25, sample_name = NULL, title_plot = NULL,
                    title_x_axis = NULL, title_y_axis = "Chromosome Length", title_legend = "Telomere Size (bp)",
                    color_hap1 = "dodgerblue2", color_hap2 = "orangered", name_hap1 = "Haplotype 1",
