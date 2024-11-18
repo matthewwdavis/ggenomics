@@ -1,0 +1,21 @@
+Package: ggnomics
+Title: Create Genomic Feature Visualizations 
+Version: 0.0.0.9000
+Authors@R: 
+    person("Matthew", "Davis", , "mtdavis@ucdavis.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0004-8933-349X"))
+Description: A package for visualizing genomic features, performing genome quality control, and
+    identifying genomic phenomenon utilizing the flexibility of ggplot2.
+    Additional functionality is expected to be added to ggideo
+    to improve flexibility and visualization capabilities over time.
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+    Biostrings (>= 2.5.0),
+    data.table (>= 1.16.2),
+    dplyr (>= 1.1.4),
+    pbapply (>= 1.7.2),
+    scales (>= 1.3.0),
+    stringr (>= 1.5.1)
