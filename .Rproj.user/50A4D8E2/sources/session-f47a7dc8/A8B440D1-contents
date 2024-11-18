@@ -32,7 +32,7 @@
 #'
 #' @examples
 #' # Example usage
-#' # ggideoprimary(path_fasta = "path/to/genome.fasta", sample_name = "Sample_1", title_plot = "Genome Ideogram")
+#' # ggideo(path_fasta = "path/to/genome.fasta", sample_name = "Sample_1", title_plot = "Genome Ideogram")
 #'
 #' @importFrom Biostrings readDNAStringSet
 #' @importFrom data.table data.table

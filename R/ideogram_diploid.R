@@ -1,17 +1,20 @@
-#' Create an ideogram plot for primary genomic assemblies
+#' Create an ideogram plot for haplotype phased diploid genomic assemblies
 #'
 #' This function generates a basic ideogram plot of chromosomes, including the chromosome length and the telomere regions.
 #' It visualizes the telomeres by marking the start and end points, and adjusting the plot appearance according to
 #' specified parameters such as color, size, and scaling. This function was built to use datasets generated with genome_table
 #'
-#' @param genome.table A data frame containing genomic data, with columns for chromosome names, chromosome lengths,
-#'        and the start and end positions of telomere regions (`begin_telo_start`, `begin_telo_end`, `end_telo_start`,
+#' @param genome.table A data frame containing genomic data, with columns for chromosome names, chromosome lengths, haplotypes, 
+#'        and the start and end positions of telomere regions. (`begin_telo_start`, `begin_telo_end`, `end_telo_start`,
 #'        `end_telo_end`, `begin_telo_bp`, and `end_telo_bp`).
 #' @param plot_title A character string specifying the plot title. Default is `NULL`, in which case no title is added.
 #' @param x_axis_title A character string specifying the x axis title. Default is `NULL`, in which case no title is added.
 #' @param y_axis_title A character string specifying the y axis title. Default is "Chromosome Length".
 #' @param legend_title A character string specifying the legend title. Default is "Telomere Presence".
-#' @param chr_color A character string specifying the color of the chromosome segments. Default is "dodgerblue2".
+#' @param hap1_color A character string specifying the color of the chromosome segments. Default is "dodgerblue2".
+#' @param hap2_color A character string specifying the color of the chromosome segments. Default is "orangered".
+#' @param hap1_name A character string specifying the name of the haplotype. Default is "Haplotype 1".
+#' @param hap2_name A character string specifying the name of the haplotype. Default is "Haplotype 2".
 #' @param chr_size A numeric value specifying the size (linewidth) of the chromosome segments. Default is 6.
 #' @param tel_color A character string specifying the color of the telomere points. Default is "black".
 #' @param tel_shape A numeric value specifying the shape of the telomere points. Default is 16 (filled circle).
@@ -35,36 +38,47 @@
 #'   begin_telo_bp = c(5000000, 10000000),
 #'   end_telo_bp = c(5000000, 10000000)
 #' )
-#' ideogram(genome.table)
+#' ideogram_diploid(genome.table)
 #'
 #' @importFrom ggplot2 ggplot aes geom_segment geom_point labs theme_classic theme element_text scale_y_continuous
 #' @importFrom scales label_number
 #' @importFrom dplyr filter
 #'
 #' @export
-ideogram <- function(genome.table, plot_title = NULL, x_axis_title = NULL, y_axis_title = "Chromosome Length",
-                             legend_title = "Telomere Size (bp)", chr_color = "dodgerblue2", chr_size = 6,
-                             tel_color = "black", tel_shape = 16, y_scale = 1e-6, y_scale_suffix = "Mb",
-                             legend_pos = "bottom", legend_size = 0.25, text_size = 6) {
-
+ideogram_diploid <- function(genome.table, plot_title = NULL, x_axis_title = NULL, y_axis_title = "Chromosome Length",
+                             legend_title = "Telomere Size (bp)", hap1_name = "Haplotype 1", hap2_name = "Haplotype 2",
+                             hap1_color = "dodgerblue2", hap2_color = "orangered", chr_size = 6, tel_color = "black",
+                             tel_shape = 16, y_scale = 1e-6, y_scale_suffix = "Mb", legend_pos = "bottom",
+                             legend_size = 0.25, text_size = 6) {
+  
+  # Calculate dodge width dynamically based on number of haplotypes
+  n_haplotypes <- length(unique(genome.table$Hap))
+  dodge_width <- 1 / n_haplotypes  # Adjust width based on number of unique haplotypes
+  
+  # Plot the two haplotypes
   p <- genome.table %>%
-    ggplot(aes(x = Chromosome, y = Length)) +
-    geom_segment(aes(y = begin_telo_start, yend = Length),
-                 color = chr_color,
-                 linewidth = chr_size,
+    ggplot(aes(x = as.factor(Chromosome), y = Length)) +
+    geom_segment(aes(y = begin_telo_start, yend = Length, color = Hap),
+                 position = position_dodge(width = dodge_width),  # Use calculated dodge width
+                 size = chr_size, 
                  lineend = "round") +
-    geom_point(aes(x = Chromosome, y = begin_telo_end, size = ifelse(begin_telo_bp == 0, NA, begin_telo_bp)),
-               shape = tel_shape,
-               color = tel_color) +
-    geom_point(aes(x = Chromosome, y = end_telo_end, size = ifelse(end_telo_bp == 0, NA, end_telo_bp)),
-               shape = tel_shape,
-               color = tel_color) +
-    scale_y_continuous(labels = label_number(scale = y_scale, suffix = y_scale_suffix)) +
-    labs(y = y_axis_title, x = x_axis_title, size = legend_title, title = plot_title) +
+    geom_point(aes(x = Chromosome, y = begin_telo_end, size = begin_telo_bp, fill = Hap),
+               shape = tel_shape, color = tel_color, position = position_dodge(width = dodge_width)) +
+    geom_point(aes(x = Chromosome, y = end_telo_end, size = end_telo_bp, fill = Hap),
+               shape = tel_shape, color = tel_color, position = position_dodge(width = dodge_width)) +
+    scale_color_manual(name = "Haplotype",
+                       values = c(hap1 = hap1_color, hap2 = hap2_color),
+                       labels = c(hap1 = hap1_name, hap2 = hap2_name)) +
+    scale_y_continuous(
+      labels = label_number(scale = y_scale, suffix = y_scale_suffix)) +
+    labs(y = y_axis_title, x = x_axis_title, size = legend_title) +
+    guides(color = guide_legend(title = NULL, override.aes = list(size = .1)),
+           size = guide_legend(title = legend_title),
+           fill = "none") +
     theme_classic(base_size = text_size) +
     theme(legend.position = legend_pos,
           legend.key.size = unit(legend_size, "cm"),
           plot.title = element_text(hjust = 0.5, face = "bold"))
-
+  
   return(p)
 }

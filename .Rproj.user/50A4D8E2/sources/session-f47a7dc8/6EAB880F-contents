@@ -12,7 +12,7 @@
 #' @param y_axis_title A character string specifying the y axis title. Default is "Chromosome Length".
 #' @param legend_title A character string specifying the legend title. Default is "Telomere Presence".
 #' @param chr_color A character string specifying the color of the chromosome segments. Default is "dodgerblue2".
-#' @param chr_size A numeric value specifying the size (linewidth) of the chromosome segments. Default is 8.
+#' @param chr_size A numeric value specifying the size (linewidth) of the chromosome segments. Default is 6.
 #' @param tel_color A character string specifying the color of the telomere points. Default is "black".
 #' @param tel_shape A numeric value specifying the shape of the telomere points. Default is 16 (filled circle).
 #' @param y_scale A numeric value for scaling the y-axis. Default is `1e-6` (for scaling the length to Mb).
@@ -35,7 +35,7 @@
 #'   begin_telo_bp = c(5000000, 10000000),
 #'   end_telo_bp = c(5000000, 10000000)
 #' )
-#' primary_ideogram(genome.table)
+#' ideogram(genome.table)
 #'
 #' @importFrom ggplot2 ggplot aes geom_segment geom_point labs theme_classic theme element_text scale_y_continuous
 #' @importFrom scales label_number
@@ -43,7 +43,7 @@
 #'
 #' @export
 ideogram <- function(genome.table, plot_title = NULL, x_axis_title = NULL, y_axis_title = "Chromosome Length",
-                             legend_title = "Telomere Size (bp)", chr_color = "dodgerblue2", chr_size = 8,
+                             legend_title = "Telomere Size (bp)", chr_color = "dodgerblue2", chr_size = 6,
                              tel_color = "black", tel_shape = 16, y_scale = 1e-6, y_scale_suffix = "Mb",
                              legend_pos = "bottom", legend_size = 0.25, text_size = 6) {
 
