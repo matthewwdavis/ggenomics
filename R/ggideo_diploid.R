@@ -24,6 +24,7 @@
 #' @param name_hap1 A character string specifying the name of the haplotype. Default is "Haplotype 1".
 #' @param name_hap2 A character string specifying the name of the haplotype. Default is "Haplotype 2".
 #' @param size_chr A numeric value specifying the size (linewidth) of the chromosome segments. Default is 6.
+#' @param distance_chr A numeric value specifying the distance between chromosome segments. Default is 1.
 #' @param color_tel A character string specifying the color of the telomere points. Default is "black".
 #' @param shape_tel A numeric value specifying the shape of the telomere points. Default is 16 (filled circle).
 #' @param scale_y A numeric value for scaling the y-axis. Default is `1e-6` to convert lengths to megabases (Mb).
@@ -54,7 +55,7 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
                            size_windows = 1e6, min_tel_count = 25, sample_name = NULL, title_plot = NULL,
                            title_x_axis = NULL, title_y_axis = "Chromosome Length", title_legend = "Telomere Size (bp)",
                            color_hap1 = "dodgerblue2", color_hap2 = "orangered", name_hap1 = "Haplotype 1",
-                           name_hap2 = "Haplotype 2", size_chr = 6, color_tel = "black", shape_tel = 16,
+                           name_hap2 = "Haplotype 2", size_chr = 6, distance_chr = 1, color_tel = "black", shape_tel = 16,
                            scale_y = 1e-6, suffix_y_scale = "Mb", chr_size_legend = 3,
                            pos_legend = "right", size_legend = 0.25, size_text = 6){
 
@@ -122,7 +123,7 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
     graphic <- ideogram_diploid(genome.table = diploid_plotting.table, plot_title = title_plot, x_axis_title = title_x_axis,
                                 y_axis_title = title_y_axis, legend_title = title_legend, hap1_color = color_hap1,
                                 hap2_color = color_hap2, hap1_name = name_hap1, hap2_name = name_hap2,
-                                chr_size = size_chr, tel_color = color_tel, tel_shape = shape_tel,
+                                chr_size = size_chr, chr_distance = distance_chr, tel_color = color_tel, tel_shape = shape_tel,
                                 y_scale = scale_y, y_scale_suffix = suffix_y_scale, legend_chr_size = chr_size_legend,
                                 legend_pos = pos_legend, legend_size = size_legend, text_size = size_text)
 
@@ -183,7 +184,7 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
     graphic <- ideogram_diploid(genome.table = diploid_plotting.table, plot_title = title_plot, x_axis_title = title_x_axis,
                                 y_axis_title = title_y_axis, legend_title = title_legend, hap1_color = color_hap1,
                                 hap2_color = color_hap2, hap1_name = name_hap1, hap2_name = name_hap2,
-                                chr_size = size_chr, tel_color = color_tel, tel_shape = shape_tel,
+                                chr_size = size_chr, chr_distance = distance_chr, tel_color = color_tel, tel_shape = shape_tel,
                                 y_scale = scale_y, y_scale_suffix = suffix_y_scale,legend_chr_size = chr_size_legend,
                                 legend_pos = pos_legend, legend_size = size_legend, text_size = size_text)
     

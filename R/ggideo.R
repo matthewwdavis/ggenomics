@@ -6,6 +6,7 @@
 #'
 #' @param path_fasta A character string specifying the file path to the fasta file containing the genome sequence.
 #' @param chr_names A character string specifying the pattern to identify chromosome names in the data. Default is "Chr".
+#' @param string_remove A character string to specify a substring to remove from chromosome names. Default is "_RagTag".
 #' @param tel_start_seq A character string representing the telomeric repeat sequence at the start of the chromosome. Default is "CCCTAAA".
 #' @param tel_end_seq A character string representing the telomeric repeat sequence at the end of the chromosome. Default is "TTTAGGG".
 #' @param size_windows A numeric value specifying the window size (in base pairs) for counting telomeric repeats. Default is `1e6` (1 Mb).
@@ -41,7 +42,7 @@
 #' @importFrom dplyr filter mutate left_join select
 #'
 #' @export
-ggideo <- function(path_fasta, chr_names = "Chr", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
+ggideo <- function(path_fasta, chr_names = "Chr", string_remove = "_RagTag", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
                           size_windows = 1e6, min_tel_count = 25, sample_name = NULL, title_plot = NULL,
                           title_x_axis = NULL, title_y_axis = "Chromosome Length", title_legend = "Telomere Size (bp)",
                           color_chr = "dodgerblue2", size_chr = 6, color_tel = "black", shape_tel = 16, scale_y = 1e-6,
@@ -68,6 +69,9 @@ ggideo <- function(path_fasta, chr_names = "Chr", tel_start_seq = "CCCTAAA", tel
 
   # Create the larger table necessary for plotting
   plotting.table <- genome_table(length.table, tel.table, name = sample_name, genome_size = genome.size)
+  
+  # Remove string from names
+  plotting.table$Chromosome <- remove_string_chr(diploid_plotting.table, remove_string = string_remove)
 
   # Remove leading 0s for proper ordering and plotting
   plotting.table <- remove_lead_0s(plotting.table, chr_string = chr_names)
