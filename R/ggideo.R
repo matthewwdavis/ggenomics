@@ -71,7 +71,7 @@ ggideo <- function(path_fasta, chr_names = "Chr", string_remove = "_RagTag", tel
   plotting.table <- genome_table(length.table, tel.table, name = sample_name, genome_size = genome.size)
   
   # Remove string from names
-  plotting.table$Chromosome <- remove_string_chr(diploid_plotting.table, remove_string = string_remove)
+  plotting.table$Chromosome <- remove_string_chr(plotting.table, remove_string = string_remove)
 
   # Remove leading 0s for proper ordering and plotting
   plotting.table <- remove_lead_0s(plotting.table, chr_string = chr_names)
