@@ -46,7 +46,7 @@ ggideo_diploid(
 
 \item{string_remove}{A character string to specify a substring to remove from chromosome names. Default is "_RagTag".}
 
-\item{string_hap}{A character string specifying the pattern to identify haplotype names in the data. Default is "hap\d+".}
+\item{string_hap}{A character string specifying the pattern to identify haplotype names in the data. Default is "\verb{hap\\\\d+}".}
 
 \item{tel_start_seq}{A character string representing the telomeric repeat sequence at the start of the chromosome. Default is "CCCTAAA".}
 
