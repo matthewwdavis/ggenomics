@@ -30,7 +30,7 @@ ggideo_diploid(
   scale_y = 1e-06,
   suffix_y_scale = "Mb",
   chr_size_legend = 3,
-  pos_legend = "bottom",
+  pos_legend = "right",
   size_legend = 0.25,
   size_text = 6
 )
@@ -86,7 +86,7 @@ ggideo_diploid(
 
 \item{chr_size_legend}{An integer to change the size of the chromosomes in the legend. Default is 3.}
 
-\item{pos_legend}{A character string specifying the position of the legend. Default is "bottom".}
+\item{pos_legend}{A character string or coordinates to specify the position of the legend. Default is "right".}
 
 \item{size_legend}{A numeric value specifying the size of the legend keys. Default is 0.25.}
 

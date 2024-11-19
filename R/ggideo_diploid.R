@@ -29,7 +29,7 @@
 #' @param scale_y A numeric value for scaling the y-axis. Default is `1e-6` to convert lengths to megabases (Mb).
 #' @param suffix_y_scale A character string to append to the y-axis labels, usually a unit like "Mb". Default is "Mb".
 #' @param chr_size_legend An integer to change the size of the chromosomes in the legend. Default is 3.
-#' @param pos_legend A character string specifying the position of the legend. Default is "bottom".
+#' @param pos_legend A character string or coordinates to specify the position of the legend. Default is "right".
 #' @param size_legend A numeric value specifying the size of the legend keys. Default is 0.25.
 #' @param size_text A numeric value specifying the size of text for the entire figure. Adjusts `base_size` ggplot function. Default is 6.
 #' @return A list containing:
@@ -56,7 +56,7 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
                            color_hap1 = "dodgerblue2", color_hap2 = "orangered", name_hap1 = "Haplotype 1",
                            name_hap2 = "Haplotype 2", size_chr = 6, color_tel = "black", shape_tel = 16,
                            scale_y = 1e-6, suffix_y_scale = "Mb", chr_size_legend = 3,
-                           pos_legend = "bottom", size_legend = 0.25, size_text = 6){
+                           pos_legend = "right", size_legend = 0.25, size_text = 6){
 
   if (!is.null(combined_hap_fasta)) {
 
