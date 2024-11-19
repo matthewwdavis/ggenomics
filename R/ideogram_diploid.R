@@ -16,7 +16,7 @@
 #' @param hap1_name A character string specifying the name of the haplotype. Default is "Haplotype 1".
 #' @param hap2_name A character string specifying the name of the haplotype. Default is "Haplotype 2".
 #' @param chr_size A numeric value specifying the size (linewidth) of the chromosome segments. Default is 6.
-#' @param chr_distance A numeric value specifying the distance between chromosome segments. Default is 1.
+#' @param chr_distance A numeric value specifying the distance between chromosome segments. Default is 0.7.
 #' @param tel_color A character string specifying the color of the telomere points. Default is "black".
 #' @param tel_shape A numeric value specifying the shape of the telomere points. Default is 16 (filled circle).
 #' @param y_scale A numeric value for scaling the y-axis. Default is `1e-6` (for scaling the length to Mb).
@@ -49,7 +49,7 @@
 #' @export
 ideogram_diploid <- function(genome.table, plot_title = NULL, x_axis_title = NULL, y_axis_title = "Chromosome Length",
                              legend_title = "Telomere Size (bp)", hap1_name = "Haplotype 1", hap2_name = "Haplotype 2",
-                             hap1_color = "dodgerblue2", hap2_color = "orangered", chr_size = 6, chr_distance = 1,
+                             hap1_color = "dodgerblue2", hap2_color = "orangered", chr_size = 6, chr_distance = 0.7,
                              tel_color = "black", tel_shape = 16, y_scale = 1e-6, y_scale_suffix = "Mb",
                              legend_chr_size = 3, legend_pos = "right", legend_size = 0.25, text_size = 6) {
   

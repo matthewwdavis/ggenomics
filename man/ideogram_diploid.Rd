@@ -15,7 +15,7 @@ ideogram_diploid(
   hap1_color = "dodgerblue2",
   hap2_color = "orangered",
   chr_size = 6,
-  chr_distance = 1,
+  chr_distance = 0.7,
   tel_color = "black",
   tel_shape = 16,
   y_scale = 1e-06,
@@ -49,7 +49,7 @@ and the start and end positions of telomere regions. (\code{begin_telo_start}, \
 
 \item{chr_size}{A numeric value specifying the size (linewidth) of the chromosome segments. Default is 6.}
 
-\item{chr_distance}{A numeric value specifying the distance between chromosome segments. Default is 1.}
+\item{chr_distance}{A numeric value specifying the distance between chromosome segments. Default is 0.7.}
 
 \item{tel_color}{A character string specifying the color of the telomere points. Default is "black".}
 

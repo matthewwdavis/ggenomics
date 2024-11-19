@@ -25,7 +25,7 @@ ggideo_diploid(
   name_hap1 = "Haplotype 1",
   name_hap2 = "Haplotype 2",
   size_chr = 6,
-  distance_chr = 1,
+  distance_chr = 0.7,
   color_tel = "black",
   shape_tel = 16,
   scale_y = 1e-06,
@@ -77,7 +77,7 @@ ggideo_diploid(
 
 \item{size_chr}{A numeric value specifying the size (linewidth) of the chromosome segments. Default is 6.}
 
-\item{distance_chr}{A numeric value specifying the distance between chromosome segments. Default is 1.}
+\item{distance_chr}{A numeric value specifying the distance between chromosome segments. Default is 0.7.}
 
 \item{color_tel}{A character string specifying the color of the telomere points. Default is "black".}
 

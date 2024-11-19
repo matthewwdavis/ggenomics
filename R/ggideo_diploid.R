@@ -24,7 +24,7 @@
 #' @param name_hap1 A character string specifying the name of the haplotype. Default is "Haplotype 1".
 #' @param name_hap2 A character string specifying the name of the haplotype. Default is "Haplotype 2".
 #' @param size_chr A numeric value specifying the size (linewidth) of the chromosome segments. Default is 6.
-#' @param distance_chr A numeric value specifying the distance between chromosome segments. Default is 1.
+#' @param distance_chr A numeric value specifying the distance between chromosome segments. Default is 0.7.
 #' @param color_tel A character string specifying the color of the telomere points. Default is "black".
 #' @param shape_tel A numeric value specifying the shape of the telomere points. Default is 16 (filled circle).
 #' @param scale_y A numeric value for scaling the y-axis. Default is `1e-6` to convert lengths to megabases (Mb).
@@ -55,7 +55,7 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
                            size_windows = 1e6, min_tel_count = 25, sample_name = NULL, title_plot = NULL,
                            title_x_axis = NULL, title_y_axis = "Chromosome Length", title_legend = "Telomere Size (bp)",
                            color_hap1 = "dodgerblue2", color_hap2 = "orangered", name_hap1 = "Haplotype 1",
-                           name_hap2 = "Haplotype 2", size_chr = 6, distance_chr = 1, color_tel = "black", shape_tel = 16,
+                           name_hap2 = "Haplotype 2", size_chr = 6, distance_chr = 0.7, color_tel = "black", shape_tel = 16,
                            scale_y = 1e-6, suffix_y_scale = "Mb", chr_size_legend = 3,
                            pos_legend = "right", size_legend = 0.25, size_text = 6){
 
