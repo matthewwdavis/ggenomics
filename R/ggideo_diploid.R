@@ -6,7 +6,10 @@
 #'
 #' @param path_hap1_fasta A character string specifying the file path to the fasta file containing the haplotype 1 genome sequence.
 #' @param path_hap2_fasta A character string specifying the file path to the fasta file containing the haplotype 2 genome sequence.
+#' @param combined_hap_fasta A character string specifying the file path to a combined FASTA file containing both haplotypes. Default is NULL.
 #' @param chr_names A character string specifying the pattern to identify chromosome names in the data. Default is "Chr".
+#' @param string_remove A character string to specify a substring to remove from chromosome names. Default is "_RagTag".
+#' @param string_hap A character string specifying the pattern to identify haplotype names in the data. Default is "hap\d+".
 #' @param tel_start_seq A character string representing the telomeric repeat sequence at the start of the chromosome. Default is "CCCTAAA".
 #' @param tel_end_seq A character string representing the telomeric repeat sequence at the end of the chromosome. Default is "TTTAGGG".
 #' @param size_windows A numeric value specifying the window size (in base pairs) for counting telomeric repeats. Default is `1e6` (1 Mb).
