@@ -28,6 +28,7 @@
 #' @param shape_tel A numeric value specifying the shape of the telomere points. Default is 16 (filled circle).
 #' @param scale_y A numeric value for scaling the y-axis. Default is `1e-6` to convert lengths to megabases (Mb).
 #' @param suffix_y_scale A character string to append to the y-axis labels, usually a unit like "Mb". Default is "Mb".
+#' @param chr_size_legend An integer to change the size of the chromosomes in the legend. Default is 3.
 #' @param pos_legend A character string specifying the position of the legend. Default is "bottom".
 #' @param size_legend A numeric value specifying the size of the legend keys. Default is 0.25.
 #' @param size_text A numeric value specifying the size of text for the entire figure. Adjusts `base_size` ggplot function. Default is 6.
@@ -54,7 +55,8 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
                            title_x_axis = NULL, title_y_axis = "Chromosome Length", title_legend = "Telomere Size (bp)",
                            color_hap1 = "dodgerblue2", color_hap2 = "orangered", name_hap1 = "Haplotype 1",
                            name_hap2 = "Haplotype 2", size_chr = 6, color_tel = "black", shape_tel = 16,
-                           scale_y = 1e-6, suffix_y_scale = "Mb", pos_legend = "bottom", size_legend = 0.25, size_text = 6){
+                           scale_y = 1e-6, suffix_y_scale = "Mb", chr_size_legend = 3,
+                           pos_legend = "bottom", size_legend = 0.25, size_text = 6){
 
   if (!is.null(combined_hap_fasta)) {
 
@@ -121,8 +123,8 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
                                 y_axis_title = title_y_axis, legend_title = title_legend, hap1_color = color_hap1,
                                 hap2_color = color_hap2, hap1_name = name_hap1, hap2_name = name_hap2,
                                 chr_size = size_chr, tel_color = color_tel, tel_shape = shape_tel,
-                                y_scale = scale_y, y_scale_suffix = suffix_y_scale, legend_pos = pos_legend,
-                                legend_size = size_legend, text_size = size_text)
+                                y_scale = scale_y, y_scale_suffix = suffix_y_scale, legend_chr_size = chr_size_legend,
+                                legend_pos = pos_legend, legend_size = size_legend, text_size = size_text)
 
     return(list(genomic.table = diploid_plotting.table, ideogram = graphic))
 
@@ -182,8 +184,8 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
                                 y_axis_title = title_y_axis, legend_title = title_legend, hap1_color = color_hap1,
                                 hap2_color = color_hap2, hap1_name = name_hap1, hap2_name = name_hap2,
                                 chr_size = size_chr, tel_color = color_tel, tel_shape = shape_tel,
-                                y_scale = scale_y, y_scale_suffix = suffix_y_scale, legend_pos = pos_legend,
-                                legend_size = size_legend, text_size = size_text)
+                                y_scale = scale_y, y_scale_suffix = suffix_y_scale,legend_chr_size = chr_size_legend,
+                                legend_pos = pos_legend, legend_size = size_legend, text_size = size_text)
     
     return(list(genomic.table = diploid_plotting.table, ideogram = graphic))
   }

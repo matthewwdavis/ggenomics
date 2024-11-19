@@ -20,7 +20,8 @@
 #' @param tel_shape A numeric value specifying the shape of the telomere points. Default is 16 (filled circle).
 #' @param y_scale A numeric value for scaling the y-axis. Default is `1e-6` (for scaling the length to Mb).
 #' @param y_scale_suffix A character string to append to the y-axis labels, usually a unit suffix like "Mb". Default is "Mb".
-#' @param legend_pos A character string specifying the position of the legend. Default is "bottom".
+#' @param legend_chr_size An integer to change the size of the chromosomes in the legend. Default is 3.
+#' @param legend_pos A character string or coordinates to specify the position of the legend. Default is "right".
 #' @param legend_size A numeric value specifying the size of the legend keys. Default is 0.25.
 #' @param text_size A numeric value specifying the size of text for the entire figure. Adjusts `base_size` ggplot function. Default is 6.
 #'
@@ -48,8 +49,8 @@
 ideogram_diploid <- function(genome.table, plot_title = NULL, x_axis_title = NULL, y_axis_title = "Chromosome Length",
                              legend_title = "Telomere Size (bp)", hap1_name = "Haplotype 1", hap2_name = "Haplotype 2",
                              hap1_color = "dodgerblue2", hap2_color = "orangered", chr_size = 6, tel_color = "black",
-                             tel_shape = 16, y_scale = 1e-6, y_scale_suffix = "Mb", legend_pos = "bottom",
-                             legend_size = 0.25, text_size = 6) {
+                             tel_shape = 16, y_scale = 1e-6, y_scale_suffix = "Mb", legend_chr_size = 3,
+                             legend_pos = "right", legend_size = 0.25, text_size = 6) {
   
   # Calculate dodge width dynamically based on number of haplotypes
   n_haplotypes <- length(unique(genome.table$Hap))
@@ -74,7 +75,7 @@ ideogram_diploid <- function(genome.table, plot_title = NULL, x_axis_title = NUL
     scale_y_continuous(
       labels = label_number(scale = y_scale, suffix = y_scale_suffix)) +
     labs(y = y_axis_title, x = x_axis_title, size = legend_title) +
-    guides(color = guide_legend(title = NULL, override.aes = list(size = .1)),
+    guides(color = guide_legend(title = NULL, override.aes = list(linewidth = legend_chr_size)),
            size = guide_legend(title = legend_title),
            fill = "none") +
     theme_classic(base_size = text_size) +

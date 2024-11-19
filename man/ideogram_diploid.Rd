@@ -19,7 +19,8 @@ ideogram_diploid(
   tel_shape = 16,
   y_scale = 1e-06,
   y_scale_suffix = "Mb",
-  legend_pos = "bottom",
+  legend_chr_size = 3,
+  legend_pos = "right",
   legend_size = 0.25,
   text_size = 6
 )
@@ -55,7 +56,9 @@ and the start and end positions of telomere regions. (\code{begin_telo_start}, \
 
 \item{y_scale_suffix}{A character string to append to the y-axis labels, usually a unit suffix like "Mb". Default is "Mb".}
 
-\item{legend_pos}{A character string specifying the position of the legend. Default is "bottom".}
+\item{legend_chr_size}{An integer to change the size of the chromosomes in the legend. Default is 3.}
+
+\item{legend_pos}{A character string or coordinates to specify the position of the legend. Default is "right".}
 
 \item{legend_size}{A numeric value specifying the size of the legend keys. Default is 0.25.}
 

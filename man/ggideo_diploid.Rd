@@ -29,6 +29,7 @@ ggideo_diploid(
   shape_tel = 16,
   scale_y = 1e-06,
   suffix_y_scale = "Mb",
+  chr_size_legend = 3,
   pos_legend = "bottom",
   size_legend = 0.25,
   size_text = 6
@@ -82,6 +83,8 @@ ggideo_diploid(
 \item{scale_y}{A numeric value for scaling the y-axis. Default is \code{1e-6} to convert lengths to megabases (Mb).}
 
 \item{suffix_y_scale}{A character string to append to the y-axis labels, usually a unit like "Mb". Default is "Mb".}
+
+\item{chr_size_legend}{An integer to change the size of the chromosomes in the legend. Default is 3.}
 
 \item{pos_legend}{A character string specifying the position of the legend. Default is "bottom".}
 
