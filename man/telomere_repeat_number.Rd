@@ -26,8 +26,8 @@ A data table with the following columns:
 \describe{
 \item{Chromosome}{The name of the chromosome.}
 \item{Window}{The window number (corresponding to the 1 Mb segments of the genome).}
-\item{CCCTAAA_Counts}{The count of the start telomere repeat sequence ("CCCTAAA") in the window.}
-\item{TTTAGGG_Counts}{The count of the end telomere repeat sequence ("TTTAGGG") in the window.}
+\item{Forward_Counts}{The count of the start telomere repeat sequence ("CCCTAAA") in the window.}
+\item{Reverse_Counts}{The count of the end telomere repeat sequence ("TTTAGGG") in the window.}
 }
 }
 \description{

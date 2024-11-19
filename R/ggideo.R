@@ -64,7 +64,7 @@ ggideo <- function(path_fasta, chr_names = "Chr", tel_start_seq = "CCCTAAA", tel
 
   # Filter to maintain telomeric counts over a certain threshold
   tel.table <- tel_count.table %>%
-    filter(CCCTAAA_Counts >= min_tel_count | TTTAGGG_Counts >= min_tel_count)
+    filter(Forward_Counts >= min_tel_count | Reverse_Counts >= min_tel_count)
 
   # Create the larger table necessary for plotting
   plotting.table <- genome_table(length.table, tel.table, name = sample_name, genome_size = genome.size)
