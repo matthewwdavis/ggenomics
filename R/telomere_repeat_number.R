@@ -14,8 +14,8 @@
 #' \describe{
 #'   \item{Chromosome}{The name of the chromosome.}
 #'   \item{Window}{The window number (corresponding to the 1 Mb segments of the genome).}
-#'   \item{CCCTAAA_Counts}{The count of the start telomere repeat sequence ("CCCTAAA") in the window.}
-#'   \item{TTTAGGG_Counts}{The count of the end telomere repeat sequence ("TTTAGGG") in the window.}
+#'   \item{Forward_Counts}{The count of the start telomere repeat sequence ("CCCTAAA") in the window.}
+#'   \item{Reverse_Counts}{The count of the end telomere repeat sequence ("TTTAGGG") in the window.}
 #' }
 #'
 #' @examples
@@ -53,8 +53,8 @@ telomere_repeat_number <- function(fasta, window = 1e6, tel_start = "CCCTAAA", t
     dt_chromosome <- data.table(
       Chromosome = rep(seq_name, length(windows)),
       Window = seq_along(windows),
-      CCCTAAA_Counts = telomere_start_counts,
-      TTTAGGG_Counts = telomere_end_counts
+      Forward_Counts = telomere_start_counts,
+      Reverse_Counts = telomere_end_counts
     )
 
     return(dt_chromosome)

@@ -18,6 +18,8 @@
 #'
 #' @export
 count_sequence <- function(window, sequence) {
+  
   count <- sum(countPattern(sequence, window))
+  
   return(count)
 }

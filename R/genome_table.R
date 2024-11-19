@@ -36,8 +36,8 @@
 genome_table <- function(fasta_lengths_table, telomere_table, name, genome_size){
   table <- left_join(fasta_lengths_table, telomere_table, by = "Chromosome") %>%
     select(!Window) %>%
-    mutate(begin_telo_bp = CCCTAAA_Counts*21) %>%
-    mutate(end_telo_bp = TTTAGGG_Counts*21) %>%
+    mutate(begin_telo_bp = Forward_Counts*21) %>%
+    mutate(end_telo_bp = Reverse_Counts*21) %>%
     mutate(begin_telo_start = 0) %>%
     mutate(begin_telo_end = begin_telo_bp) %>%
     mutate(end_telo_start = Length - end_telo_bp) %>%

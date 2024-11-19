@@ -16,5 +16,6 @@
 remove_trailing <- function(data) {
   # Function code
   data$Chromosome <- sub(" .*", "", data$Chromosome)
+  
   return(data)
 }
