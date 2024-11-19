@@ -7,6 +7,7 @@
 ggideo(
   path_fasta,
   chr_names = "Chr",
+  string_remove = "_RagTag",
   tel_start_seq = "CCCTAAA",
   tel_end_seq = "TTTAGGG",
   size_windows = 1e+06,
@@ -31,6 +32,8 @@ ggideo(
 \item{path_fasta}{A character string specifying the file path to the fasta file containing the genome sequence.}
 
 \item{chr_names}{A character string specifying the pattern to identify chromosome names in the data. Default is "Chr".}
+
+\item{string_remove}{A character string to specify a substring to remove from chromosome names. Default is "_RagTag".}
 
 \item{tel_start_seq}{A character string representing the telomeric repeat sequence at the start of the chromosome. Default is "CCCTAAA".}
 
