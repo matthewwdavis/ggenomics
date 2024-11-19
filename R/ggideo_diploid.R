@@ -59,7 +59,7 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
   if (!is.null(combined_hap_fasta)) {
 
     # Read in combined fasta file
-    combined.genome <- readDNAStringSet("~/Desktop/alfalfa/Genomes/2261-1_combohap_ragtag.fasta")
+    combined.genome <- readDNAStringSet(combined_hap_fasta)
 
     # Create table of contigs, chromosomes, and lengths
     combined_length.table <- data.table(Chromosome = names(combined.genome), Length = width(combined.genome))
@@ -184,6 +184,7 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
                                 chr_size = size_chr, tel_color = color_tel, tel_shape = shape_tel,
                                 y_scale = scale_y, y_scale_suffix = suffix_y_scale, legend_pos = pos_legend,
                                 legend_size = size_legend, text_size = size_text)
+    
     return(list(genomic.table = diploid_plotting.table, ideogram = graphic))
   }
 }
