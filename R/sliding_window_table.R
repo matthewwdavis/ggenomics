@@ -29,17 +29,31 @@
 #' @importFrom dplyr arrange group_by mutate ungroup
 #' @export
 sliding_window_table <- function(mut_table, window_size = 10000, slide_size = 5000) {
-  
-  # Sliding window calculation
-  table_w_windows <- mut_table %>%
-    arrange(CHROM, POS) %>%
-    group_by(CHROM) %>%
-    mutate(
-      WINDOW_START = ((POS - 1) %/% slide_size) * slide_size + 1,
-      WINDOW_END = WINDOW_START + window_size - 1,
-      POS_WINDOW = ((WINDOW_START + WINDOW_END) / 2)
-    ) %>%
-    ungroup()
+  # Check if the SOURCE column exists
+  if ("SOURCE" %in% colnames(mut_table)) {
+    # Include SOURCE in arrange and group_by
+    table_w_windows <- mut_table %>%
+      arrange(SOURCE,CHROM, POS) %>%
+      group_by(SOURCE, CHROM) %>%
+      mutate(
+        WINDOW_START = ((POS - 1) %/% slide_size) * slide_size + 1,
+        WINDOW_END = WINDOW_START + window_size - 1,
+        POS_WINDOW = ((WINDOW_START + WINDOW_END) / 2)
+      ) %>%
+      ungroup()
+  } else {
+    # Original behavior
+    table_w_windows <- mut_table %>%
+      arrange(CHROM, POS) %>%
+      group_by(CHROM) %>%
+      mutate(
+        WINDOW_START = ((POS - 1) %/% slide_size) * slide_size + 1,
+        WINDOW_END = WINDOW_START + window_size - 1,
+        POS_WINDOW = ((WINDOW_START + WINDOW_END) / 2)
+      ) %>%
+      ungroup()
+  }
   
   return(table_w_windows)
 }
+
