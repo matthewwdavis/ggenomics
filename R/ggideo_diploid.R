@@ -4,9 +4,9 @@
 #' filters for specified chromosomes, calculates telomeric repeat counts, and visualizes the chromosome lengths with telomere regions marked.
 #' The output includes a data table and a `ggplot` generated ideogram plot.
 #'
-#' @param path_hap1_fasta A character string specifying the file path to the fasta file containing the haplotype 1 genome sequence.
-#' @param path_hap2_fasta A character string specifying the file path to the fasta file containing the haplotype 2 genome sequence.
-#' @param combined_hap_fasta A character string specifying the file path to a combined FASTA file containing both haplotypes. Default is NULL.
+#' @param hap1_fasta A fasta file of one haplotype read with readDNAStringSet. Can be generated with `ggread_fasta`.
+#' @param hap2_fasta A fasta file of one haplotype read with readDNAStringSet. Can be generated with `ggread_fasta`.
+#' @param combined_hap_fasta  A fasta file of both haplotypes read with readDNAStringSet. Can be generated with `ggread_fasta`. Default is NULL.
 #' @param chr_names A character string specifying the pattern to identify chromosome names in the data. Default is "Chr".
 #' @param string_remove A character string to specify a substring to remove from chromosome names. Default is "_RagTag".
 #' @param string_hap A character string specifying the pattern to identify haplotype names in the data. Default is "`hap\\d+`".
@@ -50,7 +50,7 @@
 #' @importFrom dplyr filter mutate left_join select
 #'
 #' @export
-ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta = NULL, chr_names = "Chr",
+ggideo_diploid <- function(hap1_fasta, hap2_fasta, combined_hap_fasta = NULL, chr_names = "Chr",
                            string_remove = "_RagTag", string_hap = "hap\\d+",tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
                            size_windows = 1e6, min_tel_count = 25, sample_name = NULL, title_plot = NULL,
                            title_x_axis = NULL, title_y_axis = "Chromosome Length", title_legend = "Telomere Size (bp)",
@@ -62,7 +62,7 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
   if (!is.null(combined_hap_fasta)) {
 
     # Read in combined fasta file
-    combined.genome <- readDNAStringSet(combined_hap_fasta)
+    combined.genome <- combined_hap_fasta
 
     # Create table of contigs, chromosomes, and lengths
     combined_length.table <- data.table(Chromosome = names(combined.genome), Length = width(combined.genome))
@@ -132,8 +132,8 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
   } else {
 
     # Read in fasta files
-    hap1.genome <- readDNAStringSet(path_hap1_fasta)
-    hap2.genome <- readDNAStringSet(path_hap2_fasta)
+    hap1.genome <- hap1_fasta
+    hap2.genome <- hap2_fasta
     
     # Create table of contigs, chromosomes, and lengths
     hap1_length.table <- data.table(Chromosome = names(hap1.genome), Length = width(hap1.genome))
