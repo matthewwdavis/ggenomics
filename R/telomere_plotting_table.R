@@ -1,5 +1,41 @@
+#' Create a Table for Telomere Plotting
+#'
+#' This function generates a table of chromosomes, their lengths, and the associated telomere data for plotting purposes.
+#' The table includes genomic information, telomere repeat counts, and proper formatting to ensure correct chromosome ordering and visualization.
+#'
+#' @param genome A fasta file read in by `DNAStringSet` to be analyzed.
+#' @param chr_names A character string indicating the prefix for chromosome names (e.g., `"Chr"`). Default is `"Chr"`.
+#' @param string_remove A character string to remove from chromosome names. Default is `"_RagTag"`.
+#' @param tel_start_seq A character string representing the telomere start sequence. Default is `"CCCTAAA"`.
+#' @param tel_end_seq A character string representing the telomere end sequence. Default is `"TTTAGGG"`.
+#' @param size_windows A numeric value specifying the window size (in base pairs) for telomere repeat counting. Default is `1e6`.
+#' @param min_tel_count A numeric value specifying the minimum telomere repeat count to include in the final table. Default is `25`.
+#' @param sample_name A character string representing the sample name. Default is `NULL`.
+#'
+#' @return A data frame with columns for chromosome names, chromosome lengths, and telomere repeat counts. Chromosome names are properly formatted and ordered.
+#'
+#' @details 
+#' This function performs several tasks:
+#' - Filters chromosome data based on the provided chromosome name prefix.
+#' - Counts telomeric repeats in windows of the genome using specified start and end telomere sequences.
+#' - Filters out chromosomes with fewer telomere repeats than the specified threshold (`min_tel_count`).
+#' - Formats chromosome names (removes specific strings, removes leading zeros, and ensures correct ordering).
+#' 
+#' The resulting table can be used for plotting telomere data and chromosome lengths.
+#'
+#' @examples
+#' \dontrun{
+#' library(Biostrings)
+#' genome <- readDNAStringSet("path/to/genome.fasta")
+#' telomere_plotting_table(genome, chr_names = "Chr", string_remove = "_RagTag")
+#' }
+#'
+#' @seealso [select_chr()], [telomere_repeat_number()], [genome_table()], [remove_string_chr()], [remove_lead_0s()], [remove_trailing()]
+#'
+#' @import data.table dplyr
+#' @export
 telomere_plotting_table <- function(genome, chr_names = "Chr", string_remove = "_RagTag", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
-                          size_windows = 1e6, min_tel_count = 25, sample_name = NULL){
+                                    size_windows = 1e6, min_tel_count = 25, sample_name = NULL) {
   # Create table of contigs, chromosomes, and lengths
   length.table <- data.table(Chromosome = names(genome), Length = width(genome))
   
