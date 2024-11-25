@@ -15,7 +15,7 @@
 #'
 #'
 #' @export
-create_windows <- function(genome, window_size = 1e6) {
+create_windows_fasta <- function(genome, window_size = 1e6) {
   
   windows <- substring(genome, seq(1, nchar(genome), window_size),
                        seq(window_size, nchar(genome) + window_size, window_size))

@@ -23,7 +23,7 @@
 #' fasta <- list(Chr1 = "ATGCATGCATGCATGCATGCATGC", Chr2 = "GGGCCCTAAAGGGCCCTAAA")
 #' telomere_repeat_number(fasta, window = 4, tel_start = "CCCTAAA", tel_end = "TTTAGGG")
 #'
-#' @seealso \code{\link{create_windows}} and \code{\link{count_sequence}} for the functions used to split sequences
+#' @seealso \code{\link{create_windows_fasta}} and \code{\link{count_sequence}} for the functions used to split sequences
 #' and count the telomere repeats, respectively.
 #'
 #' @importFrom data.table data.table rbindlist
@@ -41,7 +41,7 @@ telomere_repeat_number <- function(fasta, window = 1e6, tel_start = "CCCTAAA", t
     sequence <- as.character(fasta[i])
 
     # Split the sequence into 1 Mb windows
-    windows <- create_windows(genome = sequence, window_size = window)
+    windows <- create_windows_fasta(genome = sequence, window_size = window)
 
     # Count occurrences of the first telomere sequence in each window
     telomere_start_counts <- sapply(windows, count_sequence, sequence = telomere_start)

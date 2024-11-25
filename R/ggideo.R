@@ -4,7 +4,7 @@
 #' filters for specified chromosomes, calculates telomeric repeat counts, and visualizes the chromosome lengths with telomere regions marked.
 #' The output includes a data table and a `ggplot` generated ideogram plot.
 #'
-#' @param fasta A fasta file read with readDNAStringSet. Can be generated with `ggread_fasta`.
+#' @param path_fasta Path to a fasta file read with readDNAStringSet.
 #' @param chr_names A character string specifying the pattern to identify chromosome names in the data. Default is "Chr".
 #' @param string_remove A character string to specify a substring to remove from chromosome names. Default is "_RagTag".
 #' @param tel_start_seq A character string representing the telomeric repeat sequence at the start of the chromosome. Default is "CCCTAAA".
@@ -42,14 +42,14 @@
 #' @importFrom dplyr filter mutate left_join select
 #'
 #' @export
-ggideo <- function(fasta, chr_names = "Chr", string_remove = "_RagTag", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
+ggideo <- function(path_fasta, chr_names = "Chr", string_remove = "_RagTag", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
                           size_windows = 1e6, min_tel_count = 25, sample_name = NULL, title_plot = NULL,
                           title_x_axis = NULL, title_y_axis = "Chromosome Length", title_legend = "Telomere Size (bp)",
                           color_chr = "dodgerblue2", size_chr = 6, color_tel = "black", shape_tel = 16, scale_y = 1e-6,
                           suffix_y_scale = "Mb", pos_legend = "bottom", size_legend = 0.25, size_text = 6){
 
   # Read in fasta
-  genome <- fasta
+  genome <- readDNAStringSet(path_fasta)
 
   # Create table of contigs, chromosomes, and lengths
   length.table <- data.table(Chromosome = names(genome), Length = width(genome))

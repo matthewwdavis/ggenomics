@@ -42,6 +42,6 @@ telomere_repeat_number(fasta, window = 4, tel_start = "CCCTAAA", tel_end = "TTTA
 
 }
 \seealso{
-\code{\link{create_windows}} and \code{\link{count_sequence}} for the functions used to split sequences
+\code{\link{create_windows_fasta}} and \code{\link{count_sequence}} for the functions used to split sequences
 and count the telomere repeats, respectively.
 }

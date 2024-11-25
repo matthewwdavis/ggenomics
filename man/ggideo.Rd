@@ -5,7 +5,7 @@
 \title{Generate an ideogram plot from a fasta file}
 \usage{
 ggideo(
-  fasta,
+  path_fasta,
   chr_names = "Chr",
   string_remove = "_RagTag",
   tel_start_seq = "CCCTAAA",
@@ -29,7 +29,7 @@ ggideo(
 )
 }
 \arguments{
-\item{fasta}{A fasta file read with readDNAStringSet. Can be generated with \code{ggread_fasta}.}
+\item{path_fasta}{Path to a fasta file read with readDNAStringSet.}
 
 \item{chr_names}{A character string specifying the pattern to identify chromosome names in the data. Default is "Chr".}
 
