@@ -5,8 +5,8 @@
 \title{Generate a diploid haplotype phased ideogram plot from two fasta file}
 \usage{
 ggideo_diploid(
-  path_hap1_fasta,
-  path_hap2_fasta,
+  hap1_fasta,
+  hap2_fasta,
   combined_hap_fasta = NULL,
   chr_names = "Chr",
   string_remove = "_RagTag",
@@ -37,11 +37,11 @@ ggideo_diploid(
 )
 }
 \arguments{
-\item{path_hap1_fasta}{A character string specifying the file path to the fasta file containing the haplotype 1 genome sequence.}
+\item{hap1_fasta}{A fasta file of one haplotype read with readDNAStringSet. Can be generated with \code{ggread_fasta}.}
 
-\item{path_hap2_fasta}{A character string specifying the file path to the fasta file containing the haplotype 2 genome sequence.}
+\item{hap2_fasta}{A fasta file of one haplotype read with readDNAStringSet. Can be generated with \code{ggread_fasta}.}
 
-\item{combined_hap_fasta}{A character string specifying the file path to a combined FASTA file containing both haplotypes. Default is NULL.}
+\item{combined_hap_fasta}{A fasta file of both haplotypes read with readDNAStringSet. Can be generated with \code{ggread_fasta}. Default is NULL.}
 
 \item{chr_names}{A character string specifying the pattern to identify chromosome names in the data. Default is "Chr".}
 

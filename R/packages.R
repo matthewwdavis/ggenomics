@@ -8,7 +8,6 @@
   suppressMessages({
     library(data.table)
     library(tidyverse)
-    library(grid)
     library(scales)
     library(Biostrings)
     library(pbapply)
