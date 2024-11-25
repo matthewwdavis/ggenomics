@@ -71,6 +71,17 @@ With the goal of replicating `ggplot2` syntax, `ggnomics` uses a wrapper functio
 
 ## Examples {#examples}
 
+Downloading an example fasta file (Arabidopsis TAIR10):
+```{r, eval=FALSE, message=FALSE}
+download.file("https://ftp.ensemblgenomes.ebi.ac.uk/pub/plants/release-60/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz", destfile = "./arabidopsis_tair10.fasta.gz", mode = "wb")
+```
+
+Read in the example fasta to use for ggnomics:
+```{r}
+
+```
+
+
 ## Legacy {#legacy}
 
 These functions were originally from the `ggideo` package. While that package has been archived, the functions will continue to exist in `ggnomics`, albeit with little continuous upkeep.

@@ -1,4 +1,4 @@
-telomere_data <- function(genome, chr_names = "Chr", string_remove = "_RagTag", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
+telomere_plotting_table <- function(genome, chr_names = "Chr", string_remove = "_RagTag", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
                           size_windows = 1e6, min_tel_count = 25, sample_name = NULL){
   # Create table of contigs, chromosomes, and lengths
   length.table <- data.table(Chromosome = names(genome), Length = width(genome))
@@ -30,7 +30,17 @@ telomere_data <- function(genome, chr_names = "Chr", string_remove = "_RagTag", 
   
   # Set levels so that chromosomes are plotted in the proper order by number
   plotting.table$Chromosome <- factor(plotting.table$Chromosome,
-                                      levels = unique(plotting.table$Chromosome)[order(as.numeric(gsub(chr_names, "", unique(plotting.table$Chromosome))))])
+                                      levels = unique(plotting.table$Chromosome)[
+                                        order(sapply(unique(plotting.table$Chromosome), function(x) {
+                                          # If the chromosome value is purely numeric, keep it as is
+                                          if (grepl("^\\d+$", x)) {
+                                            return(as.numeric(x))  # Convert numeric strings to numbers
+                                          } else {
+                                            # For non-numeric chromosomes, remove everything after the space
+                                            return(as.character(gsub(" .*", "", x)))
+                                          }
+                                        }))
+                                      ])
   
   return(plotting.table)
 }

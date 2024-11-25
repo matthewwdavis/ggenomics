@@ -55,10 +55,12 @@ ideogram <- function(genome.table, plot_title = NULL, x_axis_title = NULL, y_axi
                  lineend = "round") +
     geom_point(aes(x = Chromosome, y = begin_telo_end, size = ifelse(begin_telo_bp == 0, NA, begin_telo_bp)),
                shape = tel_shape,
-               color = tel_color) +
+               color = tel_color,
+               na.rm = TRUE) +
     geom_point(aes(x = Chromosome, y = end_telo_end, size = ifelse(end_telo_bp == 0, NA, end_telo_bp)),
                shape = tel_shape,
-               color = tel_color) +
+               color = tel_color,
+               na.rm = TRUE) +
     scale_y_continuous(labels = label_number(scale = y_scale, suffix = y_scale_suffix)) +
     labs(y = y_axis_title, x = x_axis_title, size = legend_title, title = plot_title) +
     theme_classic(base_size = text_size) +
