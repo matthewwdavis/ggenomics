@@ -81,8 +81,17 @@ ggideo <- function(path_fasta, chr_names = "Chr", string_remove = "_RagTag", tel
 
   # Set levels so that chromosomes are plotted in the proper order by number
   plotting.table$Chromosome <- factor(plotting.table$Chromosome,
-    levels = unique(plotting.table$Chromosome)[order(as.numeric(gsub(chr_names, "", unique(plotting.table$Chromosome))))])
-
+                                      levels = unique(plotting.table$Chromosome)[
+                                        order(sapply(unique(plotting.table$Chromosome), function(x) {
+                                          # If the chromosome value is purely numeric, keep it as is
+                                          if (grepl("^\\d+$", x)) {
+                                            return(as.numeric(x))  # Convert numeric strings to numbers
+                                          } else {
+                                            # For non-numeric chromosomes, remove everything after the space
+                                            return(as.character(gsub(" .*", "", x)))
+                                          }
+                                        }))
+                                      ])
 
   # plot the ideogram
   graphic <- ideogram(plotting.table, plot_title = title_plot, x_axis_title = title_x_axis,

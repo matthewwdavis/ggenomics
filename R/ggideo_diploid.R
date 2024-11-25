@@ -178,7 +178,17 @@ ggideo_diploid <- function(path_hap1_fasta, path_hap2_fasta, combined_hap_fasta 
     
     # Set levels so that chromosomes are plotted in the proper order by number
     diploid_plotting.table$Chromosome <- factor(diploid_plotting.table$Chromosome,
-                                                levels = unique(diploid_plotting.table$Chromosome)[order(as.numeric(gsub(chr_names, "", unique(diploid_plotting.table$Chromosome))))])
+                                        levels = unique(diploid_plotting.table$Chromosome)[
+                                          order(sapply(unique(diploid_plotting.table$Chromosome), function(x) {
+                                            # If the chromosome value is purely numeric, keep it as is
+                                            if (grepl("^\\d+$", x)) {
+                                              return(as.numeric(x))  # Convert numeric strings to numbers
+                                            } else {
+                                              # For non-numeric chromosomes, remove everything after the space
+                                              return(as.character(gsub(" .*", "", x)))
+                                            }
+                                          }))
+                                        ])
     
     # Plot the ideogram
     graphic <- ideogram_diploid(genome.table = diploid_plotting.table, plot_title = title_plot, x_axis_title = title_x_axis,

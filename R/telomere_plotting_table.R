@@ -32,7 +32,7 @@
 #'
 #' @seealso [select_chr()], [telomere_repeat_number()], [genome_table()], [remove_string_chr()], [remove_lead_0s()], [remove_trailing()]
 #'
-#' @import data.table dplyr
+#' @importFrom dplyr filter
 #' @export
 telomere_plotting_table <- function(genome, chr_names = "Chr", string_remove = "_RagTag", tel_start_seq = "CCCTAAA", tel_end_seq = "TTTAGGG",
                                     size_windows = 1e6, min_tel_count = 25, sample_name = NULL) {
