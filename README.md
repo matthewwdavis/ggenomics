@@ -3,8 +3,6 @@ ggnomics
 Matthew Davis
 2024-11-25
 
-# ggnomics
-
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -48,20 +46,6 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 
 devtools::install_github("matthewwdavis/ggnomics")
 ```
-
-    ## Downloading GitHub repo matthewwdavis/ggnomics@HEAD
-
-    ## Skipping 1 packages not available: Biostrings
-
-    ## ── R CMD build ──────────────────────────────────────────────────────────────────────────────
-    ##      checking for file ‘/private/var/folders/3_/3dk49hks3w59pb7_jv83_xlc0000gq/T/RtmpLr1bTu/remotes700d158d3fb6/matthewwdavis-ggnomics-45856b7/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/3_/3dk49hks3w59pb7_jv83_xlc0000gq/T/RtmpLr1bTu/remotes700d158d3fb6/matthewwdavis-ggnomics-45856b7/DESCRIPTION’
-    ##   ─  preparing ‘ggnomics’:
-    ##      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-    ##   ─  checking for LF line-endings in source and make files and shell scripts
-    ##   ─  checking for empty or unneeded directories
-    ##   ─  building ‘ggnomics_0.0.0.9000.tar.gz’
-    ##      
-    ## 
 
 ## Functions
 

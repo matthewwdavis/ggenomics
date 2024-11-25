@@ -603,8 +603,118 @@ padding-top: 0px;
 
 <h1 id="ggnomics">ggnomics</h1>
 <p>Matthew Davis 2024-11-25</p>
-<h1 id="introduction">Introduction</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">&quot;README.Rmd&quot;</span>, <span class="at">output_format =</span> <span class="st">&quot;github_document&quot;</span>)</span></code></pre></div>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#functions">Functions</a></li>
+<li><a href="#arguments">Arguments</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#legacy">Legacy</a></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p><code>ggnomics</code> is an R package that provides data
+visualizations using ggplot2. It offers functions to dynamically plot
+genomes for exploratory data analysis. <code>ggnomics</code> aims to
+utilize ggplot syntax to provide base-level genomic plots that can later
+be customized by the user.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="installing-dependencies">Installing Dependencies</h3>
+<p>To install required dependencies, you can use the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;data.table&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;scales&quot;</span>, <span class="st">&quot;pbapply&quot;</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<h3 id="installing-ggnomics">Installing <code>ggnomics</code></h3>
+<p>You can install <code>ggnomics</code> from GitHub using the following
+command:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;devtools&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;matthewwdavis/ggnomics&quot;</span>)</span></code></pre></div>
+<h2 id="functions">Functions</h2>
+<p>There are many functions in <code>ggnomics</code> used for evaluating
+genomes. As <code>ggnomics</code> evolves, more functions will be added.
+Many functions are rarely used on their own and are instead used within
+other functions. These internally used functions will not recieve
+indepth be documentation here , but are available as separate functions
+for the user regardless. The code of these functions can be viewed in R
+with <code>View(function_name)</code>.</p>
+<p><strong>Current <code>ggnomics</code> functions:</strong></p>
+<ul>
+<li><code>ggread_fasta</code> reads in fasta files.</li>
+<li><code>telomere_plotting_table</code> generates the data in a format
+necessary for <code>geom_telplot</code>.</li>
+<li><code>ggnom</code> initializes a ggplot2 object.</li>
+<li><code>geom_telplot</code> creates a plot of chromsomes with
+telomeric sequence marked by size</li>
+<li><code>create_window_fasta</code> creates windows from a fasta file
+read in with <code>ggread_fasta</code> or <code>readDNAStringSet</code>
+- <code>sliding_window_table</code> creates sliding windows from a table
+with columns CHROM and POS</li>
+</ul>
+<h2 id="arguments">Arguments</h2>
+<h2 id="usage">Usage</h2>
+<p>With the goal of replicating <code>ggplot2</code> syntax,
+<code>ggnomics</code> uses a wrapper function, <code>ggnom</code> to
+read in data created by other functions.</p>
+<h2 id="examples">Examples</h2>
+<h2 id="legacy">Legacy</h2>
+<p>These functions were originally from the <code>ggideo</code> package.
+While that package has been archived, the functions will continue to
+exist in <code>ggnomics</code>, albeit with little continuous
+upkeep.</p>
+<p>Below is an example of how to use these legacy functions:</p>
+<ul>
+<li><code>ggideo</code> is used to plot telomere plots of primary
+assemblies</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(ggnomics)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># Generate the data and the plot, stored as a list</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>genome.plot <span class="ot">&lt;-</span> <span class="fu">ggideo</span>(<span class="st">&quot;path/to/primary/fasta/file&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># Print the plot</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>genome.plot<span class="sc">$</span>ideogram</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co"># Print the resulting table</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>genome.plot<span class="sc">$</span>genomic.table</span></code></pre></div>
+<ul>
+<li><code>ggideo_diploid</code> is used to plot telomere plots of
+haplotype phased diploid assemblies. The haplotypes can be two separate
+fasta files, or a fasta file with both haplotypes present. The
+haplotypes should be identified with “_hap1” and “_hap2”</li>
+<li>Example of the two separate fasta files</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(ggnomics)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># Generate the data and the plot, stored as a list</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>genome.plot <span class="ot">&lt;-</span> <span class="fu">ggideo_diploid</span>(<span class="st">&quot;path/to/hap1/fasta/file&quot;</span>, <span class="st">&quot;path/to/hap2/fasta/file&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># Print the plot</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>genome.plot<span class="sc">$</span>ideogram</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># Print the resulting table</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>genome.plot<span class="sc">$</span>genomic.table</span></code></pre></div>
+<ul>
+<li>Example of usage with both haplotypes in one combined fasta
+file</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(ggnomics)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># Generate the data and the plot, stored as a list</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>genome.plot <span class="ot">&lt;-</span> <span class="fu">ggideo_diploid</span>(<span class="st">&quot;path/to/combined/haplotype/fasta/file&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># Print the plot</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>genome.plot<span class="sc">$</span>ideogram</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># Print the resulting table</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>genome.plot<span class="sc">$</span>genomic.table</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">&quot;README.Rmd&quot;</span>, <span class="at">output_format =</span> <span class="st">&quot;github_document&quot;</span>)</span></code></pre></div>
 
 </body>
 </html>

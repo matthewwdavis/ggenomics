@@ -9,8 +9,6 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# ggnomics
-
 ## Table of Contents
 
 -   [Introduction](#introduction)
@@ -31,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 To install required dependencies, you can use the following code:
 
-```{r, eval = FALSE, message=FALSE}
+```{r, eval=FALSE, message=FALSE}
 install.packages(c("data.table", "tidyverse", "scales", "pbapply"))
 
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
@@ -44,7 +42,7 @@ BiocManager::install("Biostrings")
 
 You can install `ggnomics` from GitHub using the following command:
 
-```{r}
+```{r, eval = FALSE, message=FALSE}
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
