@@ -114,7 +114,8 @@ print(telo.table)
 
 **NOTE:** It is always a good idea to inspect the table and ensure you are seeing what is expected. In this case, Chromosome 5 had no detected telomeric repeat, and so it has NA values.
 
-Then, the user can utilize the `ggnom` function paired with the `geom_telplot` function to create a telomere plot: - If the user wants to create a telomere plot, this is the required mapping within `aes`
+Then, the user can utilize the `ggnom` function paired with the `geom_telplot` function to create a telomere plot:\
+- If the user wants to create a telomere plot, this is the required mapping within `aes`
 
 ```{r}
 ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
@@ -156,17 +157,17 @@ library(ggnomics)
 genome.plot <- ggideo("./arabidopsis_tair10.fasta.gz", chr_names = "^\\d")
 ```
 
-- Print the table
+-   Print the table
 
 ```{r, eval=FALSE}
 genome.plot$genomic.table
 ```
 
-- Print the plot
+-   Print the plot
+
 ```{r}
 genome.plot$ideogram
 ```
-
 
 -   `ggideo_diploid` is used to plot telomere plots of haplotype phased diploid assemblies. The haplotypes can be two separate fasta files, or a fasta file with both haplotypes present. The haplotypes should be identified with "\_hap1" and "\_hap2"
 -   Example of the two separate fasta files
@@ -178,13 +179,13 @@ library(ggnomics)
 genome.plot <- ggideo_diploid("./genome_hap1.fasta.gz", "./genome_hap2.fasta.gz")
 ```
 
-- Print the table
+-   Print the table
 
 ```{r, eval=FALSE}
 genome.plot$genomic.table
 ```
 
-- Print the plot
+-   Print the plot
 
 ```{r}
 genome.plot$ideogram
@@ -200,7 +201,7 @@ genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz",
                               string_remove = "_hap\\d_RagTag")
 ```
 
- -   Print the table
+-   Print the table
 
 ```{r, eval=FALSE}
 genome.plot$genomic.table
