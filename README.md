@@ -77,6 +77,14 @@ function, `ggnom` to read in data created by other functions.
 
 ## Examples
 
+Downloading an example fasta file (Arabidopsis TAIR10):
+
+``` r
+download.file("https://ftp.ensemblgenomes.ebi.ac.uk/pub/plants/release-60/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz", destfile = "./arabidopsis_tair10.fasta.gz", mode = "wb")
+```
+
+Read in the example fasta to use for ggnomics:
+
 ## Legacy
 
 These functions were originally from the `ggideo` package. While that
@@ -91,11 +99,15 @@ Below is an example of how to use these legacy functions:
 library(ggnomics)
 
 # Generate the data and the plot, stored as a list
-genome.plot <- ggideo("path/to/primary/fasta/file")
+genome.plot <- ggideo("./arabidopsis_tair10.fasta.gz", chr_names = "\\d")
 
 # Print the plot
 genome.plot$ideogram
+```
 
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+``` r
 # Print the resulting table
 genome.plot$genomic.table
 ```
@@ -110,14 +122,22 @@ genome.plot$genomic.table
 library(ggnomics)
 
 # Generate the data and the plot, stored as a list
-genome.plot <- ggideo_diploid("path/to/hap1/fasta/file", "path/to/hap2/fasta/file")
+genome.plot <- ggideo_diploid("./genome_hap1.fasta.gz", "./genome_hap2.fasta.gz")
+```
+
+    ## Joining with `by = join_by(Chromosome, Length, Forward_Counts, Reverse_Counts,
+    ## begin_telo_bp, end_telo_bp, begin_telo_start, begin_telo_end, end_telo_start, end_telo_end,
+    ## total_telo_bp, normalized_total_telo_size, Hap)`
+
+``` r
+# Print the resulting table
+genome.plot$genomic.table
 
 # Print the plot
 genome.plot$ideogram
-
-# Print the resulting table
-genome.plot$genomic.table
 ```
+
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 - Example of usage with both haplotypes in one combined fasta file
 
@@ -125,14 +145,23 @@ genome.plot$genomic.table
 library(ggnomics)
 
 # Generate the data and the plot, stored as a list
-genome.plot <- ggideo_diploid("path/to/combined/haplotype/fasta/file")
+genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz",
+                              string_remove = "_hap\\d_RagTag")
+```
+
+    ## Joining with `by = join_by(Chromosome, Length, Hap, Forward_Counts, Reverse_Counts,
+    ## begin_telo_bp, end_telo_bp, begin_telo_start, begin_telo_end, end_telo_start, end_telo_end,
+    ## total_telo_bp, normalized_total_telo_size)`
+
+``` r
+# Print the resulting table
+genome.plot$genomic.table
 
 # Print the plot
 genome.plot$ideogram
-
-# Print the resulting table
-genome.plot$genomic.table
 ```
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 rmarkdown::render("README.Rmd", output_format = "github_document")

@@ -125,7 +125,8 @@ genome.plot$ideogram
 library(ggnomics)
 
 # Generate the data and the plot, stored as a list
-genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz")
+genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz",
+                              string_remove = "_hap\\d_RagTag")
 
 # Print the resulting table
 genome.plot$genomic.table
