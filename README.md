@@ -7,11 +7,14 @@ Matthew Davis
 
 - [Introduction](#introduction)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Functions](#functions)
+- [Usage](#usage)
 - [Arguments](#arguments)
 - [Tutorials](#tutorials)
-- [Legacy](#legacy)
+- [Legacy Functions](#legacy)
+- [Getting Help](#help)
+- [Contribution](#contribution)
+- [License](#license)
 
 ## Introduction
 
@@ -19,6 +22,13 @@ Matthew Davis
 ggplot2. It offers functions to dynamically plot genomes for exploratory
 data analysis. `ggenomics` aims to utilize ggplot syntax to provide
 base-level genomic plots that can later be customized by the user.
+
+`ggenomics` was designed to simplify genomic data visualization using
+`ggplot2`. `ggenomics` focuses on:
+
+- Seamless integration with the `ggplot2` ecosystem.
+- Dynamic plotting for exploratory analysis.
+- Support for large genomic datasets.
 
 ## Installation
 
@@ -47,6 +57,15 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("matthewwdavis/ggenomics")
 ```
 
+### Verifying Installation
+
+After installing `ggenomics`, load it into R and check the version:
+
+``` r
+library(ggenomics)
+packageVersion("ggenomics")
+```
+
 ## Functions
 
 The functions in `ggenomics` create specifically structured data frames
@@ -60,21 +79,22 @@ examples from start-to-finish see [Tutorials](#tutorials).
 **Current `ggenomics` functions:**  
 
 - `ggread_fasta()` reads in fasta files.
-- `telomere_plotting_table()` generates the data in a format necessary
-  for `geom_telplot`.
-- `ggenom()` initializes a ggplot2 object.
-- `geom_telplot()` creates a plot of chromsomes with telomeric sequence
-  marked by size.
+- `telomere_plotting_table()` generates data in a format necessary for
+  `geom_telplot()`.
+- `ggenom()` initializes a ggplot2 object with `ggenomics` specific
+  mapping options.
+- `geom_telplot()` creates a plot of chromosomes with telomeric
+  sequences marked by size.
 - `create_window_fasta()` creates windows from a fasta file read in with
-  `ggread_fasta` or `readDNAStringSet`.
+  `ggread_fasta()` or `readDNAStringSet()`.
 - `sliding_window_table()` creates sliding windows from a table with
-  columns CHROM and POS. The table may optionally have a column SOURCE.
+  columns CHROM and POS.
 
 There are many functions that are rarely used on their own and are
-instead used to facilitate other, larger functions. Those functions will
-not receive in-depth documentation, but they are available as separate
-functions for the user regardless. The code behind these functions can
-be viewed in R with `View(function_name)`.
+instead used to facilitate other, larger functions within `ggenomics`.
+Those functions will not receive in-depth documentation, but they are
+available as separate functions for the user regardless. The code behind
+these functions can be viewed in R with `View(function_name)`.
 
 ## Usage
 
@@ -85,14 +105,16 @@ generate a data set with specific formatting. This data set will then be
 incorporated into the respective plotting functions.
 
 With the goal of replicating `ggplot2` syntax, `ggenomics` uses a
-wrapper function, `ggenom` to read in data created by other functions.
-Plotting functions will be added as `geom_` and attached to `ggenom`
-with a `+`.
+wrapper function, `ggenom()` to read in data created by other functions.
+`ggenom()` has `ggenomics` specific mapping options for plotting with
+`ggnomics` geoms. Plotting functions will be added as with `ggplot2`
+syntax, attaching geoms to `ggenom()` with a `+`.
 
-This section will cover some basic examples for each function. The
-[Tutorials](#tutorials) section has more in-depth start-to-finish
-information on usage and further information about arguments available
-in each function can be found in the [Arguments](#arguments) section.
+This section will describe the functions and cover some basic examples
+for each function. The [Tutorials](#tutorials) section has more in-depth
+start-to-finish information on usage, and further information about the
+arguments available in each function can be found in the
+[Arguments](#arguments) section.
 
 ### `ggread_fasta()`
 
@@ -112,9 +134,9 @@ This function takes a fasta file and telomere string (Default =
 telomere string in specified windows (Default = 1 mb). The function will
 look for three of the specified telomere string back-to-back to minimize
 detecting the kmer not associated with telomeres. For example, if the
-string is “CCCTAAA”, the windows will be searched for occurrences of
-“CCCTAAACCCTAAACCCTAAA”. The table is then filtered for a minimum number
-of string occurances per window (Default = 25).
+string is “CCCTAAA”, the windows of the genome will be searched for
+occurrences of “CCCTAAACCCTAAACCCTAAA”. The table is then filtered for a
+minimum number of string occurrences per window (Default = 25).
 
 ``` r
 tel.table <- telomere_plotting_table(genome)
@@ -123,12 +145,13 @@ tel.table <- telomere_plotting_table(genome)
 ### `ggenom()`
 
 This function initializes a `ggplot2` object in R. It is a wrapper for
-`ggplot()` and creates a `ggplot2` object. If the goal of the user is to
-use `ggenomics` plotting functions, specific `plot` type value must be
-specified. These will be in the plot specific [Usage](#usage)
-information and in the [Tutorials](#tutorials) for creating specific
-plots. The options for `plot` values can be seen in
-[Arguments](#arguments)
+`ggplot()` and creates a `ggplot2` object with `ggenomics` specific
+mapping specified by the `plot` argument. The user should specify
+specific `plot` values to use with corresponding `ggenomics` geoms. The
+proper `plot` argument settings will be in the geom specific
+[Usage](#usage) information and in the [Tutorials](#tutorials) for
+creating specific plots. The options for `plot` and the corresponding
+geoms can be seen in [Arguments](#arguments)
 
 ``` r
 ggenom_object <- ggenom(tel.table, plot = "telplot")
@@ -136,26 +159,28 @@ ggenom_object <- ggenom(tel.table, plot = "telplot")
 
 ### `geom_telplot()`
 
-This function generates a `ggenomics` style telomere plot that can be
-used as a base for genome visualization. It must be added to a
-`ggenom()` or `ggplot()` created object with the proper mapping
-information specified here and in [Tutorials](#tutorials). Since the
-plot is `ggplot2` based, the user can customize it how they like, a
+This function generates a `ggenomics` telomere plot that can be used as
+a base for genome visualization. It should be added to a `ggenom()`
+created object with the proper mapping information specified by the
+`plot` argument. The proper `plot` argument value to be specified in
+`ggenom()` for `geom_telplot` is `plot = "telplot"`. This can be seen
+here and in [Tutorials](#tutorials). Since the plot is `ggplot2` based,
+the user can customize the result however they like with `ggplot2`, a
 concept which is further explored in [Tutorials](#tutorials).
 
 ``` r
-ggenom_object +
+ggenom(tel.table, plot = "telplot") +
   geom_telplot()
 
 # --or-- #
 
-ggenom(tel.table, plot = "telplot") +
+ggenom_object +
   geom_telplot()
 ```
 
 ### `create_window_fasta()`
 
-This function creates windows (Default = 1mb) from a fasta file read in
+This function creates windows (Default = 1mb) from a fasta file read
 with `ggread_fasta()` or `readDNAStringSet()`. It extracts sub-strings
 at regularly defined intervals from the fasta file.
 
@@ -172,7 +197,9 @@ append them to the current data. WINDOW_START is the base pair position
 of the start of the window, WINDOW_END is the base pair position of the
 end of the window, and POS_WINDOW is the base pair position of the
 midpoint of the window. If the user does not want the windows to slide,
-set the `slide_size` argument equal to the `window_size` argument.
+set the `slide_size` argument equal to the `window_size` argument. If a
+column named SOURCE is present, the function will automatically take
+that into account when creating windows.
 
 ``` r
 table_windows <- sliding_window_table(vcf_table)
@@ -209,11 +236,11 @@ table_windows <- sliding_window_table(vcf_table)
 
 ### `ggenom()`
 
-- `data`: The data needed necessary for plotting. This is generated from
+- `data`: Data needed necessary for plotting. This is generated from
   other functions, such as `telomere_plotting_table`.
 
-- `mapping`: The necessary column headers for plotting. If using the
-  `plot` argument, this can be ignored. It is suggested to use `plot`
+- `mapping`: The column headers for plotting. If using the `plot`
+  argument, this can be ignored. It is suggested to use `plot`.
 
 - `plot`: The necessary mapping information for each `ggenomics` style
   plot. This is different for each `ggenomics` geom specified. This is
@@ -245,7 +272,7 @@ table_windows <- sliding_window_table(vcf_table)
 ### `create_window_fasta()`
 
 - `genome`: DNAStringSet object of a fasta file. Can be generated with
-  `ggread_fasta` or `readDNAStringSet`.
+  `ggread_fasta()` or `readDNAStringSet()`.
 - `window_size`: A numeric value specifying the size of the window.
   Default is 1000000 (1mb).
 
@@ -263,7 +290,7 @@ table_windows <- sliding_window_table(vcf_table)
 
 The following examples are more in-depth than what is found in usage and
 meant to walk the user through using the package from start to finish,
-data download to plotting. The subheaders define different end goals.
+data download to plotting. The sub-headers define different end goals.
 Publicly available data is used so that the users results can be
 compared here to make sure everything is operating correctly.
 
@@ -281,7 +308,7 @@ The first step is to load the library
 library(ggenomics)
 ```
 
-After loading the library, read in the fasta file with `ggread_fasta`
+After loading the library, read in the fasta file with `ggread_fasta()`
 
 Read in the example fasta to use for `ggenomics`:  
 - This creates a DNAStringSet object of a fasta file of interest for
@@ -292,7 +319,7 @@ genome <- ggread_fasta("./arabidopsis_tair10.fasta.gz")
 ```
 
 Next the user should use a data analysis function :  
-- In this example, the function creates a table with telomere counts
+- In this example, the function creates a table with telomere counts.
 
 ``` r
 telo.table <- telomere_plotting_table(genome, chr_names = "^\\d")
@@ -327,20 +354,20 @@ print(telo.table)
 are seeing what is expected. In this case, Chromosome 5 had no detected
 telomeric repeat, and so it has NA values.
 
-Then, the user can utilize the `ggenom` function paired with the
-`geom_telplot` function to create a telomere plot:  
-- If the user wants to create a telomere plot, this is the required
-`plot` argument value. The options for possible `plot` argument values
-can be found in [Arguments](#arguments)
+Then, the user can utilize the `ggenom()` function paired with the
+`geom_telplot()` function to create a telomere plot:  
+- If the user wants to create a telomere plot, the set
+`plot = "telplot"`. The options for possible `plot` argument values can
+be found in [Arguments](#arguments).
 
 ``` r
 ggenom(telo.table, plot = "telplot") +
   geom_telplot()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
-There are some arguments within `geom_telplot` to specify shape and
+There are some arguments within `geom_telplot()` to specify shape and
 color:
 
 ``` r
@@ -348,11 +375,11 @@ ggenom(telo.table, plot = "telplot") +
   geom_telplot(chr_color = "bisque2", tel_color = "darkgreen", tel_shape = 18)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 Since all plots are `ggplot2` based, they can be edited and adjusted
 like any ggplot:  
-- The user can add adjustments with `+`, just like in `ggplot`
+- The user can add adjustments with `+`, just like in `ggplot2`.
 
 ``` r
 ggenom(telo.table, plot = "telplot") +
@@ -365,9 +392,12 @@ ggenom(telo.table, plot = "telplot") +
         plot.title = element_text(hjust = 0.5, face = "bold"))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
-## Legacy
+## Legacy Functions
+
+**Disclaimer:** These functions may not be actively maintained, and
+users should use updated alternatives when possible.
 
 These functions were originally from the `ggideo` package. While that
 package has been archived, the functions will continue to exist in
@@ -375,39 +405,39 @@ package has been archived, the functions will continue to exist in
 
 Below is an example of how to use these legacy functions:
 
-- `ggideo` is used to plot telomere plots of primary assemblies
+- `ggideo()` is used to plot telomere plots of primary assemblies.
 
 ``` r
 library(ggenomics)
 
-# Generate the data and the plot, stored as a list
+# Generate data and plot, stored as a list
 genome.plot <- ggideo("./arabidopsis_tair10.fasta.gz", chr_names = "^\\d")
 ```
 
-- Print the table
+- Print the table.
 
 ``` r
 genome.plot$genomic.table
 ```
 
-- Print the plot
+- Print the plot.
 
 ``` r
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
-- `ggideo_diploid` is used to plot telomere plots of haplotype phased
+- `ggideo_diploid()` is used to plot telomere plots of haplotype phased
   diploid assemblies. The haplotypes can be two separate fasta files, or
   a fasta file with both haplotypes present. The haplotypes should be
-  identified with “\_hap1” and “\_hap2”
-- Example of the two separate fasta files
+  identified with “\_hap1” and “\_hap2”.
+- Example of the two separate fasta files.
 
 ``` r
 library(ggenomics)
 
-# Generate the data and the plot, stored as a list
+# Generate data and plot, stored as a list
 genome.plot <- ggideo_diploid("./genome_hap1.fasta.gz", "./genome_hap2.fasta.gz")
 ```
 
@@ -415,26 +445,26 @@ genome.plot <- ggideo_diploid("./genome_hap1.fasta.gz", "./genome_hap2.fasta.gz"
     ## begin_telo_bp, end_telo_bp, begin_telo_start, begin_telo_end, end_telo_start,
     ## end_telo_end, total_telo_bp, normalized_total_telo_size, Hap)`
 
-- Print the table
+- Print the table.
 
 ``` r
 genome.plot$genomic.table
 ```
 
-- Print the plot
+- Print the plot.
 
 ``` r
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
-- Example of usage with both haplotypes in one combined fasta file
+- Example of usage with both haplotypes in one combined fasta file.
 
 ``` r
 library(ggenomics)
 
-# Generate the data and the plot, stored as a list
+# Generate data and plot, stored as a list
 genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz",
                               string_remove = "_hap\\d_RagTag")
 ```
@@ -443,16 +473,38 @@ genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz",
     ## Reverse_Counts, begin_telo_bp, end_telo_bp, begin_telo_start, begin_telo_end,
     ## end_telo_start, end_telo_end, total_telo_bp, normalized_total_telo_size)`
 
-- Print the table
+- Print the table.
 
 ``` r
 genome.plot$genomic.table
 ```
 
-- Print the plot
+- Print the plot.
 
 ``` r
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+
+## Getting Help
+
+If you encounter any issues or have questions, you can:
+
+- Check the detailed package documentation using `?function_name` in R
+- Submit an issue on the [GitHub
+  repository](https://github.com/matthewwdavis/ggenomics/issues)
+
+## Contribution
+
+Contributions are welcome! To contribute:
+
+- Fork the repository on GitHub.
+- Make your changes in a new branch.
+- Submit a pull request with a detailed description of your changes.
+
+## License
+
+This package is licensed under the MIT License. See the
+[LICENSE](https://github.com/matthewwdavis/ggenomics/blob/main/LICENSE)
+file for details.
