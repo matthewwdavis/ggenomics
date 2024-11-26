@@ -129,7 +129,8 @@ ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
   geom_telplot(chr_color = "bisque2", tel_color = "darkgreen", tel_shape = 18)
 ```
 
-Since all plots are `ggplot2` based, they can be edited and adjusted like any ggplot: - The user can add adjustments with `+`, just like in `ggplot`
+Since all plots are `ggplot2` based, they can be edited and adjusted like any ggplot:\
+- The user can add adjustments with `+`, just like in `ggplot`
 
 ```{r}
 ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +

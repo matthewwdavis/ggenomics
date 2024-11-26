@@ -181,8 +181,8 @@ ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
 ![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 Since all plots are `ggplot2` based, they can be edited and adjusted
-like any ggplot: - The user can add adjustments with `+`, just like in
-`ggplot`
+like any ggplot:  
+- The user can add adjustments with `+`, just like in `ggplot`
 
 ``` r
 ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
