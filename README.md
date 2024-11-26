@@ -116,57 +116,59 @@ start-to-finish information on usage, and further information about the
 arguments available in each function can be found in the
 [Arguments](#arguments) section.
 
-### `ggread_fasta()`
+`ggread_fasta()`
 
-This function reads a fasta file into R. It is a wrapper for
-`readDNAStringSet()` and creates a DNAStringSet object. `ggenomics`
-functions that use fasta files will use this object, so using this
-function or `readDNAStringSet()` for fasta files is necessary.
+- This function reads a fasta file into R. It is a wrapper for
+  `readDNAStringSet()` and creates a DNAStringSet object. `ggenomics`
+  functions that use fasta files will use this object, so using this
+  function or `readDNAStringSet()` for fasta files is necessary.
 
 ``` r
 genome <- ggread_fasta("path/to/fasta")
 ```
 
-### `telomere_plotting_table()`
+`telomere_plotting_table()`
 
-This function takes a fasta file and telomere string (Default =
-“CCCTAAA”), then looks through the fasta for the occurrence of that
-telomere string in specified windows (Default = 1 mb). The function will
-look for three of the specified telomere string back-to-back to minimize
-detecting the kmer not associated with telomeres. For example, if the
-string is “CCCTAAA”, the windows of the genome will be searched for
-occurrences of “CCCTAAACCCTAAACCCTAAA”. The table is then filtered for a
-minimum number of string occurrences per window (Default = 25).
+- This function takes a fasta file and telomere string (Default =
+  “CCCTAAA”), then looks through the fasta for the occurrence of that
+  telomere string in specified windows (Default = 1 mb). The function
+  will look for three of the specified telomere string back-to-back to
+  minimize detecting the kmer not associated with telomeres. For
+  example, if the string is “CCCTAAA”, the windows of the genome will be
+  searched for occurrences of “CCCTAAACCCTAAACCCTAAA”. The table is then
+  filtered for a minimum number of string occurrences per window
+  (Default = 25).
 
 ``` r
 tel.table <- telomere_plotting_table(genome)
 ```
 
-### `ggenom()`
+`ggenom()`
 
-This function initializes a `ggplot2` object in R. It is a wrapper for
-`ggplot()` and creates a `ggplot2` object with `ggenomics` specific
-mapping specified by the `plot` argument. The user should specify
-specific `plot` values to use with corresponding `ggenomics` geoms. The
-proper `plot` argument settings will be in the geom specific
-[Usage](#usage) information and in the [Tutorials](#tutorials) for
-creating specific plots. The options for `plot` and the corresponding
-geoms can be seen in [Arguments](#arguments)
+- This function initializes a `ggplot2` object in R. It is a wrapper for
+  `ggplot()` and creates a `ggplot2` object with `ggenomics` specific
+  mapping specified by the `plot` argument. The user should specify
+  specific `plot` values to use with corresponding `ggenomics` geoms.
+  The proper `plot` argument settings will be in the geom specific
+  [Usage](#usage) information and in the [Tutorials](#tutorials) for
+  creating specific plots. The options for `plot` and the corresponding
+  geoms can be seen in [Arguments](#arguments)
 
 ``` r
 ggenom_object <- ggenom(tel.table, plot = "telplot")
 ```
 
-### `geom_telplot()`
+`geom_telplot()`
 
-This function generates a `ggenomics` telomere plot that can be used as
-a base for genome visualization. It should be added to a `ggenom()`
-created object with the proper mapping information specified by the
-`plot` argument. The proper `plot` argument value to be specified in
-`ggenom()` for `geom_telplot` is `plot = "telplot"`. This can be seen
-here and in [Tutorials](#tutorials). Since the plot is `ggplot2` based,
-the user can customize the result however they like with `ggplot2`, a
-concept which is further explored in [Tutorials](#tutorials).
+- This function generates a `ggenomics` telomere plot that can be used
+  as a base for genome visualization. It should be added to a `ggenom()`
+  created object with the proper mapping information specified by the
+  `plot` argument. The proper `plot` argument value to be specified in
+  `ggenom()` for `geom_telplot` is `plot = "telplot"`. This can be seen
+  here and in [Tutorials](#tutorials). Since the plot is `ggplot2`
+  based, the user can customize the result however they like with
+  `ggplot2`, a concept which is further explored in
+  [Tutorials](#tutorials).
 
 ``` r
 ggenom(tel.table, plot = "telplot") +
@@ -178,28 +180,29 @@ ggenom_object +
   geom_telplot()
 ```
 
-### `create_window_fasta()`
+`create_window_fasta()`
 
-This function creates windows (Default = 1mb) from a fasta file read
-with `ggread_fasta()` or `readDNAStringSet()`. It extracts sub-strings
-at regularly defined intervals from the fasta file.
+- This function creates windows (Default = 1mb) from a fasta file read
+  with `ggread_fasta()` or `readDNAStringSet()`. It extracts sub-strings
+  at regularly defined intervals from the fasta file.
 
 ``` r
 fasta_windows <- create_windows_fasta(genome)
 ```
 
-### `sliding_window_table()`
+`sliding_window_table()`
 
-This function creates windows (Default = 10kb) with a slide (Default =
-5kb) from data.frames and data.tables with columns named CHROM and POS.
-It will create 3 new columns (WINDOW_START, WINDOW_END, POS_WINDOW) and
-append them to the current data. WINDOW_START is the base pair position
-of the start of the window, WINDOW_END is the base pair position of the
-end of the window, and POS_WINDOW is the base pair position of the
-midpoint of the window. If the user does not want the windows to slide,
-set the `slide_size` argument equal to the `window_size` argument. If a
-column named SOURCE is present, the function will automatically take
-that into account when creating windows.
+- This function creates windows (Default = 10kb) with a slide (Default =
+  5kb) from data.frames and data.tables with columns named CHROM and
+  POS. It will create 3 new columns (WINDOW_START, WINDOW_END,
+  POS_WINDOW) and append them to the current data. WINDOW_START is the
+  base pair position of the start of the window, WINDOW_END is the base
+  pair position of the end of the window, and POS_WINDOW is the base
+  pair position of the midpoint of the window. If the user does not want
+  the windows to slide, set the `slide_size` argument equal to the
+  `window_size` argument. If a column named SOURCE is present, the
+  function will automatically take that into account when creating
+  windows.
 
 ``` r
 table_windows <- sliding_window_table(vcf_table)
@@ -207,12 +210,12 @@ table_windows <- sliding_window_table(vcf_table)
 
 ## Arguments
 
-### `ggread_fasta()`
+`ggread_fasta()`
 
 - `path_to_fasta`: The directory path to the fasta file of interest to
   read into R. Creates a DNAStringSet object.
 
-### `telomere_plotting_table()`
+`telomere_plotting_table()`
 
 - `genome`: DNAStringSet object of a fasta file. Can be generated with
   `ggread_fasta` or `readDNAStringSet`.
@@ -234,7 +237,7 @@ table_windows <- sliding_window_table(vcf_table)
 - `sample_name`: A character string to include the sample name in the
   table. Default is NULL.
 
-### `ggenom()`
+`ggenom()`
 
 - `data`: Data needed necessary for plotting. This is generated from
   other functions, such as `telomere_plotting_table`.
@@ -248,7 +251,7 @@ table_windows <- sliding_window_table(vcf_table)
 
   - “telplot” to be used with `geom_telplot()`
 
-### `geom_telplot()`
+`geom_telplot()`
 
 - `chr_color`: A character string specifying the color of the plotted
   chromosomes or sequences. Default is “\#F8766D”.
@@ -269,14 +272,14 @@ table_windows <- sliding_window_table(vcf_table)
 - `y_axis_title`: A character string specifying the title of the y-axis
   Default is “Chromosome Length”.
 
-### `create_window_fasta()`
+`create_window_fasta()`
 
 - `genome`: DNAStringSet object of a fasta file. Can be generated with
   `ggread_fasta()` or `readDNAStringSet()`.
 - `window_size`: A numeric value specifying the size of the window.
   Default is 1000000 (1mb).
 
-### `sliding_window_table()`
+`sliding_window_table()`
 
 - `mut_table`: A data.frame or data.table containing genomic data.
   **Must have columns CHROM and POS**.
