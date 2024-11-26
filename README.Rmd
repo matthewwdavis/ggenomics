@@ -125,14 +125,14 @@ There are some arguments within `geom_telplot` to specify shape and color:
 
 ```{r}
 ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
-  geom_telplot(chr_color = "bisque", tel_color = "darkgreen", tel_shape = 18)
+  geom_telplot(chr_color = "bisque2", tel_color = "darkgreen", tel_shape = 18)
 ```
 
 Since all plots are `ggplot2` based, they can be edited and adjusted like any ggplot: - The user can add adjustments with `+`, just like in `ggplot`
 
 ```{r}
 ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
-  geom_telplot(chr_color = "bisque", tel_color = "darkgreen", tel_shape = 18) +
+  geom_telplot(chr_color = "bisque2", tel_color = "darkgreen", tel_shape = 18) +
     scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "Mb")) +
     labs(y = "Sequence Length", x = "Chromosome", size = "Telomere Size", title = "ggnomics Telomere Plot") +
     theme_classic(base_size = 6) +
@@ -155,6 +155,8 @@ library(ggnomics)
 # Generate the data and the plot, stored as a list
 genome.plot <- ggideo("./arabidopsis_tair10.fasta.gz", chr_names = "^\\d")
 ```
+
+- Print the table
 
 ```{r, eval=FALSE}
 genome.plot$genomic.table

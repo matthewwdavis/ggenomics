@@ -110,6 +110,8 @@ The first step is to load the library
 library(ggnomics)
 ```
 
+    ## Loading ggideo and required packages...
+
 After loading the library, read in the fasta file with `ggread_fasta`
 
 Read in the example fasta to use for ggnomics:  
@@ -130,6 +132,28 @@ telo.table <- telomere_plotting_table(genome, chr_names = "^\\d")
 print(telo.table)
 ```
 
+    ##    Chromosome   Length Forward_Counts Reverse_Counts begin_telo_bp end_telo_bp
+    ##        <fctr>    <int>          <int>          <int>         <num>       <num>
+    ## 1:          1 30427671            270              1          5670          21
+    ## 2:          2 19698289              0             49             0        1029
+    ## 3:          3 23459830             37              0           777           0
+    ## 4:          4 18585056             52              0          1092           0
+    ## 5:          5 26975502             NA             NA            NA          NA
+    ##    begin_telo_start begin_telo_end end_telo_start end_telo_end total_telo_bp
+    ##               <num>          <num>          <num>        <int>         <num>
+    ## 1:                0           5670       30427650     30427671          5691
+    ## 2:                0              0       19697260     19698289          1029
+    ## 3:                0            777       23459830     23459830           777
+    ## 4:                0           1092       18585056     18585056          1092
+    ## 5:                0             NA             NA     26975502            NA
+    ##    normalized_total_telo_size
+    ##                         <num>
+    ## 1:               4.776479e-05
+    ## 2:               8.636438e-06
+    ## 3:               6.521392e-06
+    ## 4:               9.165199e-06
+    ## 5:                         NA
+
 **NOTE:** It is always a good idea to inspect the table and ensure you
 are seeing what is expected. In this case, Chromosome 5 had no detected
 telomeric repeat, and so it has NA values.
@@ -143,17 +167,17 @@ ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
   geom_telplot()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 There are some arguments within `geom_telplot` to specify shape and
 color:
 
 ``` r
 ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
-  geom_telplot(chr_color = "bisque", tel_color = "darkgreen", tel_shape = 18)
+  geom_telplot(chr_color = "bisque2", tel_color = "darkgreen", tel_shape = 18)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 Since all plots are `ggplot2` based, they can be edited and adjusted
 like any ggplot: - The user can add adjustments with `+`, just like in
@@ -161,7 +185,7 @@ like any ggplot: - The user can add adjustments with `+`, just like in
 
 ``` r
 ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
-  geom_telplot(chr_color = "bisque", tel_color = "darkgreen", tel_shape = 18) +
+  geom_telplot(chr_color = "bisque2", tel_color = "darkgreen", tel_shape = 18) +
     scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "Mb")) +
     labs(y = "Sequence Length", x = "Chromosome", size = "Telomere Size", title = "ggnomics Telomere Plot") +
     theme_classic(base_size = 6) +
@@ -170,7 +194,7 @@ ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
           plot.title = element_text(hjust = 0.5, face = "bold"))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-63-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ## Legacy
 
@@ -189,6 +213,8 @@ library(ggnomics)
 genome.plot <- ggideo("./arabidopsis_tair10.fasta.gz", chr_names = "^\\d")
 ```
 
+- Print the table
+
 ``` r
 genome.plot$genomic.table
 ```
@@ -199,7 +225,7 @@ genome.plot$genomic.table
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 - `ggideo_diploid` is used to plot telomere plots of haplotype phased
   diploid assemblies. The haplotypes can be two separate fasta files, or
@@ -214,9 +240,9 @@ library(ggnomics)
 genome.plot <- ggideo_diploid("./genome_hap1.fasta.gz", "./genome_hap2.fasta.gz")
 ```
 
-    ## Joining with `by = join_by(Chromosome, Length, Forward_Counts, Reverse_Counts, begin_telo_bp, end_telo_bp,
-    ## begin_telo_start, begin_telo_end, end_telo_start, end_telo_end, total_telo_bp, normalized_total_telo_size,
-    ## Hap)`
+    ## Joining with `by = join_by(Chromosome, Length, Forward_Counts, Reverse_Counts,
+    ## begin_telo_bp, end_telo_bp, begin_telo_start, begin_telo_end, end_telo_start,
+    ## end_telo_end, total_telo_bp, normalized_total_telo_size, Hap)`
 
 - Print the table
 
@@ -230,7 +256,7 @@ genome.plot$genomic.table
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-69-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 - Example of usage with both haplotypes in one combined fasta file
 
@@ -242,9 +268,9 @@ genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz",
                               string_remove = "_hap\\d_RagTag")
 ```
 
-    ## Joining with `by = join_by(Chromosome, Length, Hap, Forward_Counts, Reverse_Counts, begin_telo_bp,
-    ## end_telo_bp, begin_telo_start, begin_telo_end, end_telo_start, end_telo_end, total_telo_bp,
-    ## normalized_total_telo_size)`
+    ## Joining with `by = join_by(Chromosome, Length, Hap, Forward_Counts,
+    ## Reverse_Counts, begin_telo_bp, end_telo_bp, begin_telo_start, begin_telo_end,
+    ## end_telo_start, end_telo_end, total_telo_bp, normalized_total_telo_size)`
 
 - Print the table
 
@@ -258,4 +284,4 @@ genome.plot$genomic.table
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-72-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
