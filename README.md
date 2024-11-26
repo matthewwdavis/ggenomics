@@ -7,9 +7,9 @@ Matthew Davis
 
 - [Introduction](#introduction)
 - [Installation](#installation)
+- [Usage](#usage)
 - [Functions](#functions)
 - [Arguments](#arguments)
-- [Usage](#usage)
 - [Examples](#examples)
 - [Legacy](#legacy)
 
@@ -47,15 +47,28 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("matthewwdavis/ggnomics")
 ```
 
+## Usage
+
+`ggnomics` has two main functionalities: data analysis and plotting. The
+data analysis tools are set up to be used with the plotting functions. A
+typical workflow will use a specific data analysis tool to generate a
+data set with specific formatting. This data set will then be
+incorporated into the respective plotting functions.
+
+With the goal of replicating `ggplot2` syntax, `ggnomics` uses a wrapper
+function, `ggnom` to read in data created by other functions. Plotting
+functions will be added as `geom_` and attached to `ggnom` with a `+`.
+
+The next section will tackle examples using real data.
+
 ## Functions
 
-There are many functions in `ggnomics` used for evaluating genomes. As
-`ggnomics` evolves, more functions will be added. Many functions are
-rarely used on their own and are instead used within other functions.
-These internally used functions will not recieve indepth be
-documentation here , but are available as separate functions for the
-user regardless. The code of these functions can be viewed in R with
-`View(function_name)`.
+The functions in `ggnomics` create specifically structured data frames
+for plotting. `ggnomics` is expected to continually evolve, with more
+functions for analysis and plotting added overtime.
+
+Below are some current functions in `ggnomics` and a very brief
+description of their usage:
 
 **Current `ggnomics` functions:**  
 - `ggread_fasta` reads in fasta files.  
@@ -68,14 +81,22 @@ marked by size
 `ggread_fasta` or `readDNAStringSet` - `sliding_window_table` creates
 sliding windows from a table with columns CHROM and POS
 
+There are many functions that are rarely used on their own and are
+instead used to facilitate other, larger functions. Those functions will
+not receive in depth documentation here, but they are available as
+separate functions for the user regardless. The code of these functions
+can be viewed in R with `View(function_name)`.
+
 ## Arguments
 
-## Usage
-
-With the goal of replicating `ggplot2` syntax, `ggnomics` uses a wrapper
-function, `ggnom` to read in data created by other functions.
-
 ## Examples
+
+The following examples are meant to walk the user through using the
+package from data download to plotting. Publicly available data is used
+so that the users results can be compared here to make sure everything
+is operating correctly.
+
+### Creating telomere plots with geom_telplot()
 
 Downloading an example fasta file (Arabidopsis TAIR10):
 
@@ -83,7 +104,73 @@ Downloading an example fasta file (Arabidopsis TAIR10):
 download.file("https://ftp.ensemblgenomes.ebi.ac.uk/pub/plants/release-60/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz", destfile = "./arabidopsis_tair10.fasta.gz", mode = "wb")
 ```
 
-Read in the example fasta to use for ggnomics:
+The first step is to load the library
+
+``` r
+library(ggnomics)
+```
+
+After loading the library, read in the fasta file with `ggread_fasta`
+
+Read in the example fasta to use for ggnomics:  
+- This creates a DNAStringSet object of a fasta file of interest for
+downstream analysis.
+
+``` r
+genome <- ggread_fasta("./arabidopsis_tair10.fasta.gz")
+```
+
+Next the user should use a data analysis function :  
+- In this example, the function creates a table with telomere counts
+
+``` r
+telo.table <- telomere_plotting_table(genome, chr_names = "^\\d")
+# "^\\d" is used here to specify that the chromosome names begin with a number, as we are not interested in plotting the plasmid genomes.
+
+print(telo.table)
+```
+
+**NOTE:** It is always a good idea to inspect the table and ensure you
+are seeing what is expected. In this case, Chromosome 5 had no detected
+telomeric repeat, and so it has NA values.
+
+Then, the user can utilize the `ggnom` function paired with the
+`geom_telplot` function to create a telomere plot: - If the user wants
+to create a telomere plot, this is the required mapping within `aes`
+
+``` r
+ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
+  geom_telplot()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+
+There are some arguments within `geom_telplot` to specify shape and
+color:
+
+``` r
+ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
+  geom_telplot(chr_color = "bisque", tel_color = "darkgreen", tel_shape = 18)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
+
+Since all plots are `ggplot2` based, they can be edited and adjusted
+like any ggplot: - The user can add adjustments with `+`, just like in
+`ggplot`
+
+``` r
+ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
+  geom_telplot(chr_color = "bisque", tel_color = "darkgreen", tel_shape = 18) +
+    scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "Mb")) +
+    labs(y = "Sequence Length", x = "Chromosome", size = "Telomere Size", title = "ggnomics Telomere Plot") +
+    theme_classic(base_size = 6) +
+    theme(legend.position = "bottom",
+          legend.key.size = unit(0.2, "cm"),
+          plot.title = element_text(hjust = 0.5, face = "bold"))
+```
+
+![](README_files/figure-gfm/unnamed-chunk-63-1.png)<!-- -->
 
 ## Legacy
 
@@ -99,18 +186,20 @@ Below is an example of how to use these legacy functions:
 library(ggnomics)
 
 # Generate the data and the plot, stored as a list
-genome.plot <- ggideo("./arabidopsis_tair10.fasta.gz", chr_names = "\\d")
+genome.plot <- ggideo("./arabidopsis_tair10.fasta.gz", chr_names = "^\\d")
+```
 
-# Print the plot
+``` r
+genome.plot$genomic.table
+```
+
+- Print the plot
+
+``` r
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
-
-``` r
-# Print the resulting table
-genome.plot$genomic.table
-```
+![](README_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
 
 - `ggideo_diploid` is used to plot telomere plots of haplotype phased
   diploid assemblies. The haplotypes can be two separate fasta files, or
@@ -125,19 +214,23 @@ library(ggnomics)
 genome.plot <- ggideo_diploid("./genome_hap1.fasta.gz", "./genome_hap2.fasta.gz")
 ```
 
-    ## Joining with `by = join_by(Chromosome, Length, Forward_Counts, Reverse_Counts,
-    ## begin_telo_bp, end_telo_bp, begin_telo_start, begin_telo_end, end_telo_start, end_telo_end,
-    ## total_telo_bp, normalized_total_telo_size, Hap)`
+    ## Joining with `by = join_by(Chromosome, Length, Forward_Counts, Reverse_Counts, begin_telo_bp, end_telo_bp,
+    ## begin_telo_start, begin_telo_end, end_telo_start, end_telo_end, total_telo_bp, normalized_total_telo_size,
+    ## Hap)`
+
+- Print the table
 
 ``` r
-# Print the resulting table
 genome.plot$genomic.table
+```
 
-# Print the plot
+- Print the plot
+
+``` r
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-69-1.png)<!-- -->
 
 - Example of usage with both haplotypes in one combined fasta file
 
@@ -149,20 +242,20 @@ genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz",
                               string_remove = "_hap\\d_RagTag")
 ```
 
-    ## Joining with `by = join_by(Chromosome, Length, Hap, Forward_Counts, Reverse_Counts,
-    ## begin_telo_bp, end_telo_bp, begin_telo_start, begin_telo_end, end_telo_start, end_telo_end,
-    ## total_telo_bp, normalized_total_telo_size)`
+    ## Joining with `by = join_by(Chromosome, Length, Hap, Forward_Counts, Reverse_Counts, begin_telo_bp,
+    ## end_telo_bp, begin_telo_start, begin_telo_end, end_telo_start, end_telo_end, total_telo_bp,
+    ## normalized_total_telo_size)`
+
+- Print the table
 
 ``` r
-# Print the resulting table
 genome.plot$genomic.table
+```
 
-# Print the plot
+- Print the plot
+
+``` r
 genome.plot$ideogram
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
-
-``` r
-rmarkdown::render("README.Rmd", output_format = "github_document")
-```
+![](README_files/figure-gfm/unnamed-chunk-72-1.png)<!-- -->
