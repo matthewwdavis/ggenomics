@@ -90,11 +90,11 @@ Below is an example of how to use these legacy functions:
 
 -   `ggideo` is used to plot telomere plots of primary assemblies
 
-```{r,eval=FALSE}
+```{r}
 library(ggnomics)
 
 # Generate the data and the plot, stored as a list
-genome.plot <- ggideo("path/to/primary/fasta/file")
+genome.plot <- ggideo("./arabidopsis_tair10.fasta.gz", chr_names = "\\d")
 
 # Print the plot
 genome.plot$ideogram
@@ -106,32 +106,32 @@ genome.plot$genomic.table
 -   `ggideo_diploid` is used to plot telomere plots of haplotype phased diploid assemblies. The haplotypes can be two separate fasta files, or a fasta file with both haplotypes present. The haplotypes should be identified with "\_hap1" and "\_hap2"
 -   Example of the two separate fasta files
 
-```{r,eval=FALSE}
+```{r }
 library(ggnomics)
 
 # Generate the data and the plot, stored as a list
-genome.plot <- ggideo_diploid("path/to/hap1/fasta/file", "path/to/hap2/fasta/file")
-
-# Print the plot
-genome.plot$ideogram
+genome.plot <- ggideo_diploid("./genome_hap1.fasta.gz", "./genome_hap2.fasta.gz")
 
 # Print the resulting table
 genome.plot$genomic.table
+
+# Print the plot
+genome.plot$ideogram
 ```
 
 -   Example of usage with both haplotypes in one combined fasta file
 
-```{r, eval=FALSE}
+```{r}
 library(ggnomics)
 
 # Generate the data and the plot, stored as a list
-genome.plot <- ggideo_diploid("path/to/combined/haplotype/fasta/file")
-
-# Print the plot
-genome.plot$ideogram
+genome.plot <- ggideo_diploid(combined_hap_fasta = "./genome_combohap.fasta.gz")
 
 # Print the resulting table
 genome.plot$genomic.table
+
+# Print the plot
+genome.plot$ideogram
 ```
 
 ```{r, eval=FALSE}
