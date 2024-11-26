@@ -293,8 +293,8 @@ table_windows <- sliding_window_table(vcf_table)
 
 The following examples are more in-depth than what is found in
 [Usage](#usage) and meant to walk the user through using the package
-from start to finish, data download to plotting. The sub-headers define
-different end goals. Publicly available data is used so that the users
+from start-to-finish, data download to plotting. The sub-headers define
+different end goals. Publicly available data is used so that the users’
 results can be compared here to make sure everything is operating
 correctly.
 
