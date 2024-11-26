@@ -318,6 +318,6 @@ genome.plot$genomic.table
 genome.plot$ideogram
 ```
 
-```{r, include=FALSE}
+```{r, include=FALSE, eval=FALSE}
 rmarkdown::render("README.Rmd", output_format = "github_document")
 ```
