@@ -159,8 +159,9 @@ are seeing what is expected. In this case, Chromosome 5 had no detected
 telomeric repeat, and so it has NA values.
 
 Then, the user can utilize the `ggnom` function paired with the
-`geom_telplot` function to create a telomere plot: - If the user wants
-to create a telomere plot, this is the required mapping within `aes`
+`geom_telplot` function to create a telomere plot:  
+- If the user wants to create a telomere plot, this is the required
+mapping within `aes`
 
 ``` r
 ggnom(telo.table, aes(x = Chromosome, y = begin_telo_start, yend = Length)) +
