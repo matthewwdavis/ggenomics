@@ -11,7 +11,7 @@
 #' @examples
 #' # Example usage
 #' genome <- "ATGCATGCATGCATGCATGC"
-#' create_windows(genome, window_size = 4)
+#' create_windows_fasta(genome, window_size = 4)
 #'
 #'
 #' @export

@@ -1,6 +1,6 @@
-Package: ggnomics
+Package: ggenomics
 Title: Create Genomic Feature Visualizations 
-Version: 0.0.0.9000
+Version: 0.3.0
 Authors@R: 
     person("Matthew", "Davis", , "mtdavis@ucdavis.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0004-8933-349X"))
@@ -13,6 +13,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
+    ggplot2 (>= 3.0.0),
     Biostrings (>= 2.5.0),
     data.table (>= 1.16.0),
     dplyr (>= 1.1.4),

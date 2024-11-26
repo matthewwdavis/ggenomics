@@ -125,7 +125,7 @@ fasta_windows <- create_windows_fasta(genome)
 
 This function creates windows (Default = 10kb) with a slide (Default = 5kb) from data.frames and data.tables with columns named CHROM and POS. It will create 3 new columns (WINDOW_START, WINDOW_END, POS_WINDOW) and append them to the current data. WINDOW_START is the base pair position of the start of the window, WINDOW_END is the base pair position of the end of the window, and POS_WINDOW is the base pair position of the midpoint of the window. If the user does not want the windows to slide, set the `slide_size` argument equal to the `window_size` argument.
 
-```{r}
+```{r, eval=FALSE}
 table_windows <- sliding_window_table(vcf_table)
 ```
 
@@ -277,7 +277,7 @@ genome.plot$ideogram
 -   `ggideo_diploid` is used to plot telomere plots of haplotype phased diploid assemblies. The haplotypes can be two separate fasta files, or a fasta file with both haplotypes present. The haplotypes should be identified with "\_hap1" and "\_hap2"
 -   Example of the two separate fasta files
 
-```{r }
+```{r}
 library(ggenomics)
 
 # Generate the data and the plot, stored as a list
