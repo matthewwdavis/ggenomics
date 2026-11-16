@@ -17,7 +17,8 @@ mosaic_build(
 )
 }
 \arguments{
-\item{document}{The path of the mosaic document (.mosaic).}
+\item{document}{The path of the mosaic document: a .mff file, or one saved before November 2026 as
+.mosaic (or .figasm, from when mosaic was called FigAssemble).}
 
 \item{formats}{The formats to export: any of "pdf", "svg", "png", "tiff", "jpeg" and "eps". Default is "pdf".}
 
@@ -50,10 +51,13 @@ without opening mosaic. The document itself is left as it is unless \code{save =
 \examples{
 \dontrun{
 # Example usage
-mosaic_build("./Figures/main_figures.mosaic", formats = c("pdf", "png"))
+mosaic_build("./Figures/main_figures.mff", formats = c("pdf", "png"))
+
+# A figure saved before November 2026, as .mosaic, works the same way
+mosaic_build("./Figures/old_figures.mosaic", formats = "pdf")
 
 # One page, in a journal's label style, saved under another name
-mosaic_build("./Figures/main_figures.mosaic", pages = 2, journal = "Nature",
+mosaic_build("./Figures/main_figures.mff", pages = 2, journal = "Nature",
              output = "./Figures/submission/figure_2")
 }
 
