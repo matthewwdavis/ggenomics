@@ -33,7 +33,7 @@
 #' save_for_mosaic(depth.plot, "./Figures/demo/weight_mpg", width = 60, height = 45, units = "mm")
 #'
 #' # Re-make every export of the figure the plot is placed in
-#' mosaic_build("./Figures/main_figures.mosaic", formats = c("pdf", "png"))
+#' mosaic_build("./Figures/main_figures.mff", formats = c("pdf", "png"))
 #' }
 #'
 #' @seealso [mosaic_build()]

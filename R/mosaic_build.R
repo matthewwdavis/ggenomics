@@ -5,7 +5,8 @@
 #' that re-makes the plots (e.g. with [save_for_mosaic()]) so the finished figure follows the data
 #' without opening mosaic. The document itself is left as it is unless `save = TRUE`.
 #'
-#' @param document The path of the mosaic document (.mosaic).
+#' @param document The path of the mosaic document: a .mff file, or one saved before November 2026 as
+#' .mosaic (or .figasm, from when mosaic was called FigAssemble).
 #' @param formats The formats to export: any of "pdf", "svg", "png", "tiff", "jpeg" and "eps". Default is "pdf".
 #' @param output The path of the exported files, without an extension. Default is NULL, which names
 #' them after the document.
@@ -23,10 +24,13 @@
 #' @examples
 #' \dontrun{
 #' # Example usage
-#' mosaic_build("./Figures/main_figures.mosaic", formats = c("pdf", "png"))
+#' mosaic_build("./Figures/main_figures.mff", formats = c("pdf", "png"))
+#'
+#' # A figure saved before November 2026, as .mosaic, works the same way
+#' mosaic_build("./Figures/old_figures.mosaic", formats = "pdf")
 #'
 #' # One page, in a journal's label style, saved under another name
-#' mosaic_build("./Figures/main_figures.mosaic", pages = 2, journal = "Nature",
+#' mosaic_build("./Figures/main_figures.mff", pages = 2, journal = "Nature",
 #'              output = "./Figures/submission/figure_2")
 #' }
 #'
@@ -34,9 +38,12 @@
 #' @export
 mosaic_build <- function(document, formats = "pdf", output = NULL, dpi = 600, pages = NULL,
                          journal = NULL, save = FALSE, mosaic = NULL, quiet = FALSE) {
-  # 1. Check the document and find mosaic
+  # 1. Check the document (.mff, or an older .mosaic or .figasm) and find mosaic
   if (!file.exists(document)) {
     stop("There is no mosaic document at ", document)
+  }
+  if (!is_mosaic_document(document)) {
+    stop(document, " is not a mosaic document (", paste(c(mosaic_new.extension, mosaic_legacy.extensions), collapse = ", "), ")")
   }
   if (is.null(mosaic)) {
     mosaic <- find_mosaic()
@@ -77,6 +84,34 @@ mosaic_build <- function(document, formats = "pdf", output = NULL, dpi = 600, pa
   }
 
   return(invisible(as.character(exported.files)))
+}
+
+#' mosaic's Document Extensions
+#'
+#' The extension mosaic gives new documents (".mff", "mosaic figure file") and the older ones it still
+#' opens and saves under their own names (".mosaic" until November 2026, and ".figasm" from when mosaic
+#' was called FigAssemble). Anything in ggenomics that names or checks a mosaic document uses these.
+#'
+#' @noRd
+mosaic_new.extension <- ".mff"
+mosaic_legacy.extensions <- c(".mosaic", ".figasm")
+
+#' Check Whether a Path Is a mosaic Document
+#'
+#' This function checks a file's name (not its contents) against mosaic's document extensions: the
+#' new one and the older ones, in any case.
+#'
+#' @param path The path of the file.
+#'
+#' @return TRUE if the path ends in .mff, .mosaic or .figasm; FALSE otherwise.
+#'
+#' @noRd
+is_mosaic_document <- function(path) {
+  # 1. The file's extension, in lower case ("" if it has none)
+  file.extension <- tolower(regmatches(basename(path), regexpr("\\.[^.]+$", basename(path))))
+
+  # 2. Whether it is one of mosaic's
+  return(length(file.extension) == 1 && file.extension %in% c(mosaic_new.extension, mosaic_legacy.extensions))
 }
 
 #' Find the mosaic Command
